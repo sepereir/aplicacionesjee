@@ -1,0 +1,24 @@
+ul li input{
+    width: 220px;
+    display: block;
+}
+ul li select{
+    display: block;
+}
+
+ul#promobox li{
+    width: 427px;
+}
+
+#sumbit-buttons{
+    clear: left;
+}
+ul#promobox li img{
+    float: right
+}
+ul#promobox li li{
+    clear: left;
+}
+ul#promobox li.two{
+  margin-right: 0px;
+}
