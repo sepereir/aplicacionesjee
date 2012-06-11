@@ -14,19 +14,19 @@
             <body>
                 <h:form>
                     <p>
-                        Nombre de usuario: 
+                        Nombre de usuario:
                         <h:inputText binding="#{registerBean.nombre}"/>
                     </p>
                     <p>
-                        Password: 
+                        Password:
                         <h:inputSecret binding="#{registerBean.clave}"/>
                     </p>
                     <p>
-                        Nombre completo: 
+                        Nombre completo:
                         <h:inputText binding="#{registerBean.nombre_completo}"/>
                     </p>
                     <p>
-                        Correo: 
+                        Correo:
                         <h:inputText binding="#{registerBean.mail}"/>
                     </p>
                     <p>
