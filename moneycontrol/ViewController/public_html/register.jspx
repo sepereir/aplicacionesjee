@@ -9,28 +9,31 @@
         <html>
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
-                <title>main</title>
+                <title>Registro</title>
             </head>
             <body>
                 <h:form>
                     <p>
-                        Ingreso al Sistema
+                        Nombre de usuario: 
+                        <h:inputText binding="#{registerBean.nombre}"/>
                     </p>
                     <p>
-                        Nombre: 
-                        <h:inputText binding="#{mainBean.nombre}"/>
+                        Password: 
+                        <h:inputSecret binding="#{registerBean.clave}"/>
                     </p>
                     <p>
-                        Clave:
-                        <h:inputSecret binding="#{mainBean.clave}"/>
+                        Nombre completo: 
+                        <h:inputText binding="#{registerBean.nombre_completo}"/>
                     </p>
                     <p>
-                        <h:outputLabel binding="#{mainBean.estado}"/>
+                        Correo: 
+                        <h:inputText binding="#{registerBean.mail}"/>
                     </p>
                     <p>
-                        <h:commandButton value="Entrar" action="#{mainBean.entrar}"/><h:commandButton value="Limpiar"
-                                                                                                       actionListener="#{indexbean.limpiar}"/><h:commandLink value="Registrarse"
-                                                                                                                                                             action="Registrarse"/>
+                        <h:outputLabel binding="#{registerBean.estado}"/>
+                    </p>
+                    <p>
+                        <h:commandButton value="Registrarse" action="#{registerBean.registrar}"/>
                     </p>
                 </h:form>
             </body>

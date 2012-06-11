@@ -1,0 +1,31 @@
+li span.ingreso{
+  font-size: large; 
+  color: Lime; 
+  font-weight: bold; 
+  float: right;
+
+}
+li span.gasto{
+  font-size: large; 
+  color: Red; 
+  font-weight: bold; 
+  float: right;
+}
+li span.total{
+  font-size: large; 
+  color: Lime; 
+  font-weight: bold; 
+  float: right;
+  text-decoration: overline; 
+}
+ul#promobox li ul li{
+  font-size: medium;
+  width: 300px;
+}
+ul#promobox li{
+  width: 335px;
+}
+ul#promobox li.two{
+  width: 520px;
+  margin-right: 0px;
+}

@@ -12,7 +12,7 @@ public class Usuario {
     private String nombre;
     private String nombre_completo;
     private String clave;
-    private String mail;
+    private String correo;
     private boolean admin;
     
     private Categoria[] categorias;
@@ -21,12 +21,12 @@ public class Usuario {
         super();
     }
 
-    public Usuario(String nombre, String nombre_completo, String clave, String mail, boolean admin) {
+    public Usuario(String nombre, String nombre_completo, String clave, String correo, boolean admin) {
         super();
         this.nombre = nombre;
         this.nombre_completo = nombre_completo;
         this.clave = clave;
-        this.mail = mail;
+        this.correo = correo;
         this.admin = admin;
     }
 
@@ -54,12 +54,12 @@ public class Usuario {
         return clave;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
-    public String getMail() {
-        return mail;
+    public String getCorreo() {
+        return correo;
     }
 
     public void setAdmin(boolean admin) {
@@ -100,7 +100,7 @@ public class Usuario {
                 setNombre(rs.getString("nombre"));
                 setNombre_completo(rs.getString("nombre_completo"));
                 setClave(rs.getString("contraseña"));
-                setMail(rs.getString("correo"));
+                setCorreo(rs.getString("correo"));
                 setAdmin(rs.getString("admin") == "1");
                 flag = true;
             }
@@ -119,6 +119,7 @@ public class Usuario {
     }
     
     public boolean getCategorias(String n){
+        Conexion.crear();
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -170,6 +171,7 @@ public class Usuario {
     }
     
     public boolean getCuentas(String n){
+        Conexion.crear();
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -221,6 +223,7 @@ public class Usuario {
     }
     
     public boolean registrarUsuario(Usuario u){
+        Conexion.crear();
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -234,11 +237,11 @@ public class Usuario {
         }
 
         try {
-            st.executeUpdate("INSERT INTO USUARIO(nombre, nombre_completo, contraseña, mail, admin) VALUES("
+            st.executeUpdate("INSERT INTO USUARIO(nombre, nombre_completo, contraseña, correo, admin) VALUES("
                              + " '" + u.getNombre() + "',"
                              + " '" + u.getNombre_completo() + "',"
                              + " '" + u.getClave() + "',"
-                             + " '" + u.getMail() + "',"
+                             + " '" + u.getCorreo() + "',"
                              + " '" + (u.isAdmin() ? "1" : "0") + "')");
             flag = true;
         } catch (SQLException e) {
@@ -255,6 +258,7 @@ public class Usuario {
     }
     
     public boolean editarUsuario(Usuario u){
+        Conexion.crear();
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -271,7 +275,7 @@ public class Usuario {
             st.executeUpdate("UPDATE USUARIO SET"
                              + " nombre_completo = '" + u.getNombre_completo() + "',"
                              + " contraseña = '" + u.getClave() + "',"
-                             + " mail = '" + u.getMail() + "',"
+                             + " correo = '" + u.getCorreo() + "',"
                              + " admin = '" + (u.isAdmin() ? "1" : "0") + "'"
                              + " WHERE nombre = '" + u.getNombre() + "'");
             flag = true;
@@ -289,6 +293,7 @@ public class Usuario {
     }
     
     public boolean borrarUsuario(String n){
+        Conexion.crear();
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;

@@ -1,0 +1,11 @@
+#chart{
+  min-width: 400px;
+  height: 400px;
+  width: 500px;
+  padding: 40px 0px 0px 0px; 
+  margin: 0px auto;
+}
+ul#promobox li.chartList{
+    width: 585px;
+    padding: 20px 10px 60px 20px;
+}

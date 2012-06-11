@@ -1,0 +1,16 @@
+h4{
+    clear:both;
+    padding: 15px 0px 5px 0px;
+    margin: auto;
+}
+ul#promobox li{
+    width: auto;
+    margin-right: 0px;
+    padding: 20px 60px 20px 60px;
+}
+ul#promobox li.one{
+    min-height: 210px;
+}
+ul#promobox li ul li{
+    clear: both;
+}

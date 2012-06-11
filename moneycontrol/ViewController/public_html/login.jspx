@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html">
+    <jsp:output omit-xml-declaration="true" doctype-root-element="HTML"
+                doctype-system="http://www.w3.org/TR/html4/loose.dtd"
+                doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
+    <jsp:directive.page contentType="text/html;charset=windows-1252"/>
+    <f:view>
+        <html>
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
+                <title>Money Control</title>
+                <link rel="stylesheet" type="text/css" href="resources/css/simpleblue.css"/>
+            </head>
+            <body>
+                <div id="container">
+                    <div id="topbox">
+                        <div id="tbcenter">
+                            <h2>Bienvenido a</h2>
+                             
+                            <h1>Money Control</h1>
+                             
+                            <h:form>
+                                <p>
+                                    <label for="user">Usuario:</label>
+                                     
+                                    <h:inputText binding="#{mainBean.nombre}" id="user"/>
+                                </p>
+                                <p>
+                                    <label for="pass">Contraseña:</label>
+                                     
+                                    <h:inputSecret binding="#{mainBean.clave}" id="pass"/>
+                                </p>
+                                <p>
+                                    <h:commandButton value="Entrar" action="#{mainBean.entrar}"/>
+                                     
+                                    <h:commandButton value="Registrarse" action="Register"/>
+                                </p>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </body>
+        </html>
+    </f:view>
+</jsp:root>
