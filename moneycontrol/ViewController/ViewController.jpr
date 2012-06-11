@@ -154,6 +154,15 @@
       <value n="j2eeWebAppName" v="moneycontrol-ViewController-webapp"/>
       <value n="j2eeWebContextRoot" v="moneycontrol-ViewController-context-root"/>
    </hash>
+   <hash n="oracle.jdeveloper.runner.RunConfigurations">
+      <hash n="runConfigurationDefinitions">
+         <hash n="Default">
+            <value n="custom" v="false"/>
+            <value n="name" v="Default"/>
+            <url n="targetURL" path="public_html/main.jspx"/>
+         </hash>
+      </hash>
+   </hash>
    <hash n="oracle.jdevimpl.config.JProjectLibraries">
       <list n="exportedReferences">
          <hash>

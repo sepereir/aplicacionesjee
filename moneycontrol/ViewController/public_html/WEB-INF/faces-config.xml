@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="windows-1252"?>
 <faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee">
-
+  <navigation-rule>
+    <from-view-id>/main.jspx</from-view-id>
+    <navigation-case>
+      <from-outcome>click</from-outcome>
+      <to-view-id>/estado.jspx</to-view-id>
+    </navigation-case>
+  </navigation-rule>
 </faces-config>
