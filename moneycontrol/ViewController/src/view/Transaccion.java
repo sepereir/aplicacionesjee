@@ -13,7 +13,6 @@ public class Transaccion {
     private int monto;
     private Date fecha;
     private String tipo;
-    private int saldo_acumulado;
     private int idCategoria;
     private String categoria;
     private int idCuenta;
@@ -21,6 +20,17 @@ public class Transaccion {
     private Date fecha_limite;
     public Transaccion() {
         super();
+    }
+
+    public Transaccion(int id, int monto, Date fecha, String tipo, int idCategoria,
+                       int idCuenta) {
+        super();
+        this.id = id;
+        this.monto = monto;
+        this.fecha = fecha;
+        this.tipo = tipo;
+        this.idCategoria = idCategoria;
+        this.idCuenta = idCuenta;
     }
 
     public void setId(int id) {
@@ -53,14 +63,6 @@ public class Transaccion {
 
     public String getTipo() {
         return tipo;
-    }
-
-    public void setSaldo_acumulado(int saldo_acumulado) {
-        this.saldo_acumulado = saldo_acumulado;
-    }
-
-    public int getSaldo_acumulado() {
-        return saldo_acumulado;
     }
 
     public void setIdCategoria(int idCategoria) {
@@ -139,7 +141,6 @@ public class Transaccion {
                 setMonto(rs.getInt("monto"));
                 setFecha(rs.getDate("fecha"));
                 setTipo(rs.getString("tipo"));
-                setSaldo_acumulado(rs.getInt("saldo_acumulado"));
                 setIdCategoria(rs.getInt("idCategoria"));
                 setCategoria(rs.getString("CAT.nombre"));
                 setIdCuenta(rs.getInt("idCuenta"));
@@ -169,14 +170,12 @@ public class Transaccion {
         ResultSet rs;
         rs = null;
         boolean flag = false;
-        int id;
         
         try {
             st = con.prepareStatement("INSERT INTO TRANSACCION(monto, fecha, tipo, saldo_acumulado, Categoria_idCategoria, Cuenta_idCuenta) VALUES("
                              + " " + t.getMonto() + ","
                              + " '" + t.getFecha() + "',"
                              + " '" + t.getTipo() + "',"
-                             + " " + t.getSaldo_acumulado() + ","
                              + " " + t.getIdCategoria() + ","
                              + " " + t.getIdCuenta() + ")", Statement.RETURN_GENERATED_KEYS);
             st.executeUpdate();

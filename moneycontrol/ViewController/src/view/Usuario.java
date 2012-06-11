@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.faces.context.FacesContext;
-
 public class Usuario {
     private String nombre;
     private String nombre_completo;
@@ -69,6 +67,14 @@ public class Usuario {
     public boolean isAdmin() {
         return admin;
     }
+
+    public Categoria[] getCategorias() {
+        return categorias;
+    }
+
+    public Cuenta[] getCuentas() {
+        return cuentas;
+    }
     
     public boolean getUsuario(String n, String c){  
         Conexion.crear();
@@ -118,7 +124,7 @@ public class Usuario {
         return flag;
     }
     
-    public boolean getCategorias(String n){
+    public boolean setCategorias(String n){
         Conexion.crear();
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
@@ -170,7 +176,7 @@ public class Usuario {
         return flag;
     }
     
-    public boolean getCuentas(String n){
+    public boolean setCuentas(String n){
         Conexion.crear();
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
