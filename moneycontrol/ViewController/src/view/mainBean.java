@@ -41,7 +41,7 @@ public class mainBean{
             // Guardar usuario en la sesión
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", u);
                         
-            return "main2";
+            return "gotomain";
         }
         else{
             estado.setValue("Usuario y claves incorrectas");
