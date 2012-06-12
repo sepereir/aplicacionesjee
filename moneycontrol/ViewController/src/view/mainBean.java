@@ -1,7 +1,7 @@
 package view;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlInputSecret;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.component.html.HtmlOutputLabel;
@@ -9,13 +9,15 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class mainBean{
     private HtmlInputText nombre;
     private HtmlInputSecret clave;
     private HtmlOutputLabel estado;
+    private boolean logeado;
 
     public mainBean() {
+        this.logeado = false;
     }
 
     public void setNombre(HtmlInputText nombre) {
@@ -39,8 +41,8 @@ public class mainBean{
         Usuario u = new Usuario();
         if (u.getUsuario((String)nombre.getValue(), (String)clave.getValue())){
             // Guardar usuario en la sesión
+            this.logeado = true;
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", u);
-                        
             return "gotomain";
         }
         else{
@@ -55,6 +57,11 @@ public class mainBean{
         this.clave.setValue("");
         estado.setValue("");
     }
+    
+    public Object logout() {
+        this.logeado = false;
+        return "gotologin";
+    }
 
     public void setEstado(HtmlOutputLabel estado) {
         this.estado = estado;
@@ -62,5 +69,13 @@ public class mainBean{
 
     public HtmlOutputLabel getEstado() {
         return estado;
+    }
+
+    public void setLogeado(boolean logeado) {
+        this.logeado = logeado;
+    }
+
+    public boolean isLogeado() {
+        return logeado;
     }
 }

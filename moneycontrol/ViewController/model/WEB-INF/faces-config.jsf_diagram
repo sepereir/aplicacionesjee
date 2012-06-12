@@ -85,7 +85,7 @@
       <property
          name="description">Navigation Case</property>
       <property
-         name="sdm:polyPoints">L55,281.0,258.14355,153.67383,324.18945,T50</property>
+         name="sdm:polyPoints">L55,281.0,258.14355,153.67383,323.48828,T50</property>
    </NavigationCase>
    <Page
       id="Page12">
@@ -175,7 +175,7 @@
       <property
          name="description">Navigation Case</property>
       <property
-         name="sdm:polyPoints">T43,313.5,212.14355,216.67285,149.78711,B50</property>
+         name="sdm:polyPoints">T50,317.0,207.1329,216.67285,149.78711,B50</property>
    </NavigationCase>
    <NavigationCase
       islink="true"
@@ -187,7 +187,7 @@
       <property
          name="description">Navigation Case</property>
       <property
-         name="sdm:polyPoints">T57,320.5,212.14355,426.67676,139.48828,B50</property>
+         name="sdm:polyPoints">T64,324.0,212.14355,426.67676,139.48828,B50</property>
    </NavigationCase>
    <NavigationCase
       islink="true"
@@ -211,7 +211,7 @@
       <property
          name="description">Navigation Case</property>
       <property
-         name="sdm:polyPoints">R55,353.0,258.14355,460.6836,337.18945,T50</property>
+         name="sdm:polyPoints">R55,353.0,258.14355,460.6836,336.48828,T50</property>
    </NavigationCase>
    <NavigationCase
       islink="true"
@@ -224,5 +224,17 @@
          name="description">Navigation Case</property>
       <property
          name="sdm:polyPoints">R45,353.0,251.14355,503.01074,244.89062,L50</property>
+   </NavigationCase>
+   <NavigationCase
+      islink="true"
+      id="NavigationCase24"
+      from="Page10"
+      to="Page5">
+      <property
+         name="fromOutcome">gotologin</property>
+      <property
+         name="description">Navigation Case</property>
+      <property
+         name="sdm:polyPoints">T36,310.0,212.14355,-93.0,158.51074,R50</property>
    </NavigationCase>
 </SDM>

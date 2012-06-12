@@ -2,21 +2,53 @@
     <div id="header">
         <img src="../images/logo.gif" alt="Money Control" class="logo"/>
         <ul id="toplinks">
-            <li><div id="div_clock"> Hora dump: 00:00 </div></li>
-            <li>Version del sitio: X </li>
+            <li>
+                <div id="div_clock">Hora dump: 00:00</div>
+            </li>
+             
+            <li>Version del sitio: X</li>
         </ul>
     </div>
     <div id="nav" xmlns:h="http://java.sun.com/jsf/html">
         <ul>
-            <li><h:link value="Home" outcome="gotomain" /></li>
-            <li><h:link value="Estado Economico" outcome="gotostatus" /></li>
-            <li><h:link value="Administracion" outcome="gotoadmin" /></li>
-            <li><h:link value="Sobre Nosotros" outcome="gotoabout" /></li>
+            <li>
+                <h:link value="Home" outcome="gotomain"/>
+            </li>
+             
+            <li>
+                <h:link value="Estado Economico" outcome="gotostatus"/>
+            </li>
+             
+            <li>
+                <h:link value="Administracion" outcome="gotoadmin"/>
+            </li>
+             
+            <li>
+                <h:link value="Sobre Nosotros" outcome="gotoabout"/>
+            </li>
         </ul>
         <ul class="right">
-            <li><a href="register.html"><strong>Login</strong></a></li>
-            <li><h:link value="Contacto" outcome="gotocontact" /></li>
+            <h:panelGroup layout="block" rendered="#{mainBean.logeado}">
+                <li>
+                    Bienvenido
+                    <h:link outcome="gotoadmin" value="#{mainBean.nombre.value}"/>
+                </li>
+                <li>
+                    <h:form>
+                        <h:commandButton value="Logout" action="#{mainBean.logout}"/>
+                    </h:form>
+                </li>
+            </h:panelGroup>
+            
+            <h:panelGroup layout="block" rendered="#{!mainBean.logeado}">
+                <li>
+                    NO LOGEADO
+                </li>
+            </h:panelGroup>
+             
         </ul>
     </div>
 </div>
+
+
 
