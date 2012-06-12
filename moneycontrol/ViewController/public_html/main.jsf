@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
+            <title>Money Control</title>
+            <link rel="stylesheet" type="text/css"
+                  href="#{facesContext.externalContext.requestContextPath}/resources/css/simpleblue.css"/>
+        </h:head>
+        <h:body>
+            <ui:composition template="./Templates/template.xhtml">
+                <ui:define name="container">
+                    <h:outputStylesheet name="simpleblue.css" library="css"/>
+                    <div id="nav">
+                        <ul>
+                            <li>
+                                <a href="main.html">Home</a>
+                            </li>
+                             
+                            <li>
+                                <a href="estado.html">Estado Economico</a>
+                            </li>
+                             
+                            <li>
+                                <a href="estadistica.html">Estadisticas</a>
+                            </li>
+                             
+                            <li>
+                                <a href="administracion.html">Administraci&oacute;n</a>
+                            </li>
+                             
+                            <li>
+                                <a href="about.html">Sobre nosotros</a>
+                            </li>
+                             
+                            <li>
+                                <a href="tutorial.html">Tutorial</a>
+                            </li>
+                        </ul>
+                        <ul class="right">
+                            <li>
+                                <a href="register.html">
+                                    <strong>Login</strong></a>
+                            </li>
+                             
+                            <li>
+                                <a href="contacto.html">Contactanos</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <ul id="promobox">
+                        <li>
+                            <h3>Ingresos</h3>
+                            <ul>
+                                <li>Aqui poner API</li>
+                                 
+                                <li>para ingresar ingresos</li>
+                                 
+                                <li>Una vez el usuario</li>
+                                 
+                                <li>este logueado</li>
+                                 
+                                <li>bla</li>
+                                 
+                                <li>bla</li>
+                                 
+                                <li>bla</li>
+                                 
+                                <li>bla</li>
+                            </ul>
+                            <p>
+                                <a href="content.html" title="Order Now">Submit Income</a>
+                            </p>
+                            <p>
+                                <a href="hosting.html" title="Order Now">Cancel</a>
+                            </p>
+                        </li>
+                         
+                        <li class="two">
+                            <h3>Gastos</h3>
+                            <ul>
+                                <li>Aqui poner API</li>
+                                 
+                                <li>para ingresar gastos</li>
+                                 
+                                <li>Una vez el usuario</li>
+                                 
+                                <li>este logueado</li>
+                            </ul>
+                            <p>
+                                <a href="content.html" title="Order Now">Submit Expense</a>
+                            </p>
+                            <p>
+                                <a href="content.html" title="Order Now">Cancel</a>
+                            </p>
+                        </li>
+                         
+                        <li class="three">
+                            <h3>Metas</h3>
+                            <ul>
+                                <li>Aqui poner API</li>
+                                 
+                                <li>para ingresar metas</li>
+                                 
+                                <li>o limites de gastos</li>
+                                 
+                                <li>Una vez el usuario</li>
+                                 
+                                <li>este logueado</li>
+                                 
+                                <li>bla</li>
+                                 
+                                <li>bla</li>
+                                 
+                                <li>bla</li>
+                            </ul>
+                            <p>
+                                <a href="content.html" title="Order Now">Submit Goal</a>
+                            </p>
+                            <p>
+                                <a href="content.html" title="Order Now">Cancel</a>
+                            </p>
+                        </li>
+                    </ul>
+                    <div id="newsbox">
+                        <a href="#">
+                            <img src="images/icon_rss.png" alt="Subscribe via RSS" class="right"/></a>
+                        <p class="rss">
+                            <a href="content.html">Keep Updated</a>
+                        </p>
+                        <h5>Noticias</h5>
+                        <ul>
+                            <li>
+                                <h6>
+                                    <a href="content.html">Nuevo metodo para Ahorrar!</a>
+                                </h6>
+                                <p>Alguna noticia fresca de ahorro robada por algun bot de algun blog de ahorro.</p>
+                            </li>
+                             
+                            <li>
+                                <h6>
+                                    <a href="content.html">Noticias de Money Control</a>
+                                </h6>
+                                <p>Noticias de la pagina.</p>
+                            </li>
+                             
+                            <li>
+                                <h6>
+                                    <a href="content.html">Noticia Economica</a>
+                                </h6>
+                                <p>BLA.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="quotes">
+                        <h3>Consejos para Ahorrar</h3>
+                        <p>Lea sobre como administrar su dinero.</p>
+                        <ul>
+                            <li>&quot;bla&quot;</li>
+                             
+                            <li>&quot;bla bla&quot;</li>
+                             
+                            <li>&quot;bla bla bla&quot;</li>
+                             
+                            <li>&quot;bla bla bla&quot;</li>
+                        </ul>
+                        <p>
+                            <a href="content.html" title="Read more">Read more customer testimonials</a>
+                        </p>
+                    </div>
+                </ui:define>
+            </ui:composition>
+        </h:body>
+    </html>
+</f:view>

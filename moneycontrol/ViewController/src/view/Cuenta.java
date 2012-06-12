@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.faces.context.FacesContext;
+import java.util.Date;
 
 public class Cuenta {
     private int id;
@@ -13,6 +13,7 @@ public class Cuenta {
     private String comentario;
     private int saldo;
     private String usuario;
+    private int saldo_acumulado;
     public Cuenta() {
         super();
     }
@@ -23,6 +24,15 @@ public class Cuenta {
         this.nombre = nombre;
         this.comentario = comentario;
         this.saldo = saldo;
+        this.usuario = usuario;
+    }
+
+    public Cuenta(String nombre, String comentario, String usuario) {
+        super();
+        this.id = -1;
+        this.nombre = nombre;
+        this.comentario = comentario;
+        this.saldo = 0;
         this.usuario = usuario;
     }
 
@@ -210,5 +220,57 @@ public class Cuenta {
         }
         
         return flag;
+    }
+    
+    public boolean setSaldo_acumulado(int x, Date fecha){
+        Connection con = Conexion.getSessionConn();
+        if(con == null) return false;
+        Statement st;
+        ResultSet rs;        
+        boolean flag = false;
+        
+        try {
+            st = con.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+        try {
+            rs = st.executeQuery("SELECT SUM(monto)"
+                + " FROM CUENTA AS C JOIN TRANSACCION AS T ON C.idCuenta = T.Cuenta_idCuenta"
+                + " WHERE C.idCuenta = " + x
+                + " AND T.fecha < '" + fecha.toString() + "'");
+        } catch (SQLException e) {
+            try {
+                st.close();
+            } catch (SQLException f) {
+                f.printStackTrace();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        
+        try {
+            if(rs.next()){
+                this.saldo_acumulado = rs.getInt(1);
+                flag = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                rs.close();            
+                st.close();
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        
+        return flag;
+    }
+
+    public int getSaldo_acumulado() {
+        return saldo_acumulado;
     }
 }

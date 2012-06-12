@@ -1,10 +1,7 @@
 package view;
 
 import java.sql.Connection;
-
 import java.sql.SQLException;
-
-import java.util.Map;
 
 import javax.faces.context.FacesContext;
 
@@ -14,7 +11,10 @@ import javax.naming.NamingException;
 
 import javax.sql.DataSource;
 
-public class Conexion {
+
+public final class Conexion {
+    
+    private Conexion(){}
     static public Connection getSessionConn(){
         return (Connection) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("conexion");
     }

@@ -5,12 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.faces.context.FacesContext;
+import java.util.Date;
 
 public class Categoria {
     private int id;
     private String nombre;
     private String usuario;
+    private Transaccion[] gastos;
     public Categoria() {
         super();
     }
@@ -176,6 +177,120 @@ public class Categoria {
             e.printStackTrace();
         } finally {
             try{            
+                st.close();
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        
+        return flag;
+    }
+    
+    public boolean setGastos(int x){
+        Connection con = Conexion.getSessionConn();
+        if(con == null) return false;
+        Statement st;
+        ResultSet rs;        
+        boolean flag = false;
+        
+        try {
+            st = con.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+        try {
+            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + x + " AND tipo = 'Gasto'");
+        } catch (SQLException e) {
+            try {
+                st.close();
+            } catch (SQLException f) {
+                f.printStackTrace();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        
+        try {
+            if(rs.next()){
+                rs.last();
+                gastos = new Transaccion[rs.getRow()];
+                rs.beforeFirst();
+                for(int i = 0; i < gastos.length && rs.next(); ++i){
+                    gastos[i] = new Transaccion(
+                        rs.getInt("idTransaccion"),
+                        rs.getInt("monto"),
+                        rs.getDate("fecha"),
+                        rs.getString("tipo"),
+                        x,
+                        rs.getInt("idCuenta")
+                    );
+                }
+                flag = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                rs.close();            
+                st.close();
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        
+        return flag;
+    }
+    
+    public boolean setGastos(int x, Date fecha){
+        Connection con = Conexion.getSessionConn();
+        if(con == null) return false;
+        Statement st;
+        ResultSet rs;        
+        boolean flag = false;
+        
+        try {
+            st = con.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+        try {
+            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + x + " AND tipo = 'Gasto' AND fecha = '" + fecha.toString() + "'");
+        } catch (SQLException e) {
+            try {
+                st.close();
+            } catch (SQLException f) {
+                f.printStackTrace();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        
+        try {
+            if(rs.next()){
+                rs.last();
+                gastos = new Transaccion[rs.getRow()];
+                rs.beforeFirst();
+                for(int i = 0; i < gastos.length && rs.next(); ++i){
+                    gastos[i] = new Transaccion(
+                        rs.getInt("idTransaccion"),
+                        rs.getInt("monto"),
+                        rs.getDate("fecha"),
+                        rs.getString("tipo"),
+                        x,
+                        rs.getInt("idCuenta")
+                    );
+                }
+                flag = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                rs.close();            
                 st.close();
             } catch(SQLException e){
                 e.printStackTrace();
