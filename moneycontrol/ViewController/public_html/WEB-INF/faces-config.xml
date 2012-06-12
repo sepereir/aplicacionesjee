@@ -20,5 +20,29 @@
             <from-outcome>gotomain</from-outcome>
             <to-view-id>/main.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>gotocontact</from-outcome>
+            <to-view-id>/contact.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gotostatic</from-outcome>
+            <to-view-id>/statistic.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gotostatus</from-outcome>
+            <to-view-id>/status.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gototurial</from-outcome>
+            <to-view-id>/tutorial.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gotoabout</from-outcome>
+            <to-view-id>/about.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gotoadmin</from-outcome>
+            <to-view-id>/admin.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
 </faces-config>

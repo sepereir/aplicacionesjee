@@ -6,16 +6,16 @@
             <li>Version del sitio: X </li>
         </ul>
     </div>
-    <div id="nav">
+    <div id="nav" xmlns:h="http://java.sun.com/jsf/html">
         <ul>
-            <li></li>
-            <li></li>
-            <li><a href="administracion.html">Administración</a></li>
-            <li><a href="about.html">Sobre nosotros</a></li>
+            <li><h:link value="Home" outcome="gotomain" /></li>
+            <li><h:link value="Estado Economico" outcome="gotostatus" /></li>
+            <li><h:link value="Administracion" outcome="gotoadmin" /></li>
+            <li><h:link value="Sobre Nosotros" outcome="gotoabout" /></li>
         </ul>
         <ul class="right">
             <li><a href="register.html"><strong>Login</strong></a></li>
-            <li><a href="contacto.html">Contactanos</a></li>
+            <li><h:link value="Contacto" outcome="gotocontact" /></li>
         </ul>
     </div>
 </div>

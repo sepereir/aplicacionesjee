@@ -1,36 +1,18 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Money Control</title>
-<link rel="stylesheet" type="text/css" href="simpleblue.css"/>
-<link rel="stylesheet" type="text/css" href="resources/css/estadistica.css"/>
-<script type="text/javascript" src="resources/lib/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="resources/js/chart.js"></script>
-<script type="text/javascript" src="resources/lib/highcharts.js"></script>
-<script type="text/javascript" src="resources/lib/exporting.js"></script>
-</head>
+<ui:composition template="templates/master.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+   <ui:define name="title">
+        Titulo de la pagina
+    </ui:define>
 
-<body>
-    <div id="container">
-    <div id="nav">
-        <ul>
-            <li><a href="main.html">Home</a></li>
-            <li><a href="estado.html">Estado Economico</a></li>
-            <li><a href="estadistica.html">Estadisticas</a></li>
-            <li><a href="administracion.html">Administración</a></li>
-            <li><a href="about.html">Sobre nosotros</a></li>
-        </ul>
-        
-        <ul class="right">
-            <li><a href="register.html"><strong>Login</strong></a></li>
-            <li><a href="contacto.html">Contactanos</a></li>
-        </ul>
-    </div>
-        
+    <ui:define name="body">
+       <div id="container">
     <ul id="promobox">
             <li class=chartList>
-                <h3>Gráfico balance diario</h3>
+                <h3>Gr�fico balance diario</h3>
                 <div id="chart">
                 </div>
             </li>
@@ -82,5 +64,6 @@
             <p><a href="content.html" title="Read more">Read more customer testimonials</a></p>
         </div>
     </div>
-</body>
-</html>
+    </ui:define>
+
+</ui:composition>
