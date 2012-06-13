@@ -1,7 +1,13 @@
-<div id="footer">
+<div id="footer" xmlns:h="http://java.sun.com/jsf/html" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <p>
-        Proyecto Grupo 11 del ramo CC5604,
+        Proyecto Grupo 11 del ramo CC5604, 
         <a href="http://www.dcc.uchile.cl/">DCC</a>
+         
         <a href="http://www.uchile.cl/">Universidad de Chile</a>
     </p>
+    <h:outputText value="Navegador no soportado." 
+    rendered="#{!fn:containsIgnoreCase(header['user-agent'],'chrome') and !fn:containsIgnoreCase(header['user-agent'],'firefox')}"/>
 </div>
+
+
+
