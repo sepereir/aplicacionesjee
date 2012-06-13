@@ -76,19 +76,20 @@ public class Usuario {
         return cuentas;
     }
     
-    public boolean getUsuario(String n, String c){  
-        Conexion.crear();
+    public boolean getUsuario(String n, String c){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
         ResultSet rs;        
         boolean flag = false;
+        
         try {
             st = con.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
+        
         try {
             rs = st.executeQuery("SELECT * FROM USUARIO WHERE nombre = '" + n + "' AND contraseña = '" + c + "'");
         } catch (SQLException e) {
@@ -115,7 +116,7 @@ public class Usuario {
         } finally {
             try{
                 rs.close();            
-                st.close();
+                //st.close();
             } catch(SQLException e){
                 e.printStackTrace();
             }
@@ -125,7 +126,6 @@ public class Usuario {
     }
     
     public boolean setCategorias(String n){
-        Conexion.crear();
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -178,7 +178,6 @@ public class Usuario {
     }
     
     public boolean setCuentas(String n){
-        Conexion.crear();
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -230,7 +229,6 @@ public class Usuario {
     }
     
     public boolean registrarUsuario(Usuario u){
-        Conexion.crear();
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -265,7 +263,6 @@ public class Usuario {
     }
     
     public boolean editarUsuario(Usuario u){
-        Conexion.crear();
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -300,7 +297,6 @@ public class Usuario {
     }
     
     public boolean borrarUsuario(String n){
-        Conexion.crear();
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;

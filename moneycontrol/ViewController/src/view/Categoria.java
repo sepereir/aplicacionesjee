@@ -46,6 +46,10 @@ public class Categoria {
     public String getUsuario() {
         return usuario;
     }
+
+    public Transaccion[] getGastos() {
+        return gastos;
+    }
     
     public boolean getCategoria(int x){
         Connection con = Conexion.getSessionConn();
@@ -201,7 +205,7 @@ public class Categoria {
         }
         
         try {
-            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + x + " AND tipo = 'Gasto'");
+            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + x + " AND tipo = 'GASTO'");
         } catch (SQLException e) {
             try {
                 st.close();
@@ -243,7 +247,7 @@ public class Categoria {
         return flag;
     }
     
-    public boolean setGastos(int x, Date fecha){
+    public boolean setGastos(int x, Date fecha_ini, Date fecha_fin){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -258,7 +262,8 @@ public class Categoria {
         }
         
         try {
-            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + x + " AND tipo = 'Gasto' AND fecha = '" + fecha.toString() + "'");
+            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + x+ " AND tipo = 'Gasto'"
+                                 + " AND fecha BETWEEN '" + fecha_ini.toString() + "' AND '" + fecha_fin.toString() + "'");
         } catch (SQLException e) {
             try {
                 st.close();

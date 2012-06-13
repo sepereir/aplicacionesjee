@@ -40,11 +40,13 @@ public final class Conexion {
     
     static public void cerrar(){
         Connection con = getSessionConn();
-        if(con != null)
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("conexion");
+        if(con != null){
             try {
                 con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
     }
 }

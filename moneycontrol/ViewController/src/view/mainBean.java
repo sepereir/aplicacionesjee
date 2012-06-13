@@ -38,6 +38,7 @@ public class mainBean{
 
     public Object entrar() {
         // Add event code here...
+        Conexion.crear();
         Usuario u = new Usuario();
         if (u.getUsuario((String)nombre.getValue(), (String)clave.getValue())){
             // Guardar usuario en la sesión
@@ -46,7 +47,8 @@ public class mainBean{
             return "gotomain";
         }
         else{
-            estado.setValue("Usuario y claves incorrectas");
+            //estado.setValue("Usuario y claves incorrectas");
+            Conexion.cerrar();
             return null;   
         }
     }
@@ -60,6 +62,7 @@ public class mainBean{
     
     public Object logout() {
         this.logeado = false;
+        Conexion.cerrar();
         return "gotologin";
     }
 

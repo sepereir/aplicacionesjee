@@ -166,39 +166,109 @@ public class Transaccion {
     public boolean crearTransaccion(Transaccion t){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
-        PreparedStatement st;
+        PreparedStatement st = null;
         ResultSet rs;
         rs = null;
         boolean flag = false;
+        int id;
         
         try {
-            st = con.prepareStatement("INSERT INTO TRANSACCION(monto, fecha, tipo, saldo_acumulado, Categoria_idCategoria, Cuenta_idCuenta) VALUES("
+            st = con.prepareStatement("INSERT INTO TRANSACCION(monto, fecha, tipo, Categoria_idCategoria, Cuenta_idCuenta) VALUES("
                              + " " + t.getMonto() + ","
                              + " '" + t.getFecha() + "',"
                              + " '" + t.getTipo() + "',"
                              + " " + t.getIdCategoria() + ","
                              + " " + t.getIdCuenta() + ")", Statement.RETURN_GENERATED_KEYS);
             st.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        try {
             rs = st.getGeneratedKeys();
+            id = rs.getInt(1);
+            rs.close();
+            
             if(t.getTipo() == "Prestamo" && t.getFecha_limite() != null && rs.next()){
                 st = con.prepareStatement("INSERT INTO PRESTAMO(fecha_limite, Transaccion_idTransaccion) VALUES( "
                                  + " '" + t.getFecha_limite() + "',"
-                                 + " " + rs.getInt(1));
+                                 + " " + id + ")");
                 st.executeUpdate();
             }
             flag = true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         } finally {
             try{
                 rs.close();
-                st.close();
+                if(st != null) st.close();
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        
+        return flag;
+    }
+    
+    public boolean crearTransaccionInterna(Transaccion t1, Transaccion t2){
+        Connection con = Conexion.getSessionConn();
+        if(con == null) return false;
+        PreparedStatement st = null;
+        ResultSet rs;
+        rs = null;
+        boolean flag = false;
+        int id1, id2;
+        
+        try {
+            st = con.prepareStatement("INSERT INTO TRANSACCION(monto, fecha, tipo, Categoria_idCategoria, Cuenta_idCuenta) VALUES("
+                             + " " + t1.getMonto() + ","
+                             + " '" + t1.getFecha() + "',"
+                             + " '" + t1.getTipo() + "',"
+                             + " " + t1.getIdCategoria() + ","
+                             + " " + t1.getIdCuenta() + ")", Statement.RETURN_GENERATED_KEYS);
+            st.executeUpdate();
+            rs = st.getGeneratedKeys();
+            id1 = rs.getInt(1);
+            rs.close();
+            
+            if(t1.getTipo() == "Prestamo" && t1.getFecha_limite() != null && rs.next()){
+                st = con.prepareStatement("INSERT INTO PRESTAMO(fecha_limite, Transaccion_idTransaccion) VALUES( "
+                                 + " '" + t1.getFecha_limite() + "',"
+                                 + " " + id1 + ")");
+                st.executeUpdate();
+            }
+            
+            st = con.prepareStatement("INSERT INTO TRANSACCION(monto, fecha, tipo, Categoria_idCategoria, Cuenta_idCuenta) VALUES("
+                             + " " + t2.getMonto() + ","
+                             + " '" + t2.getFecha() + "',"
+                             + " '" + t2.getTipo() + "',"
+                             + " " + t2.getIdCategoria() + ","
+                             + " " + t2.getIdCuenta() + ")", Statement.RETURN_GENERATED_KEYS);
+            st.executeUpdate();
+            rs = st.getGeneratedKeys();
+            id2 = rs.getInt(1);
+            rs.close();
+            
+            if(t2.getTipo() == "Prestamo" && t2.getFecha_limite() != null && rs.next()){
+                st = con.prepareStatement("INSERT INTO PRESTAMO(fecha_limite, Transaccion_idTransaccion) VALUES( "
+                                 + " '" + t2.getFecha_limite() + "',"
+                                 + " " + id2 + ")");
+                st.executeUpdate();
+            }
+            
+            st = con.prepareStatement("INSERT INTO TRANSACCION_INTERNA(Transaccion_idTransaccion, Cuenta_idCuenta) VALUES("
+                             + " " + id1 + ","
+                             + " " + t2.getCuenta() + ")");
+            st.executeUpdate();
+            st = con.prepareStatement("INSERT INTO TRANSACCION_INTERNA(Transaccion_idTransaccion, Cuenta_idCuenta) VALUES("
+                             + " " + id2 + ","
+                             + " " + t1.getCuenta() + ")");
+            st.executeUpdate();
+            
+            flag = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try{
+                rs.close();
+                if(st != null) st.close();
             } catch(SQLException e){
                 e.printStackTrace();
             }
