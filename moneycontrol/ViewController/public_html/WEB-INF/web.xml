@@ -6,6 +6,11 @@
     <param-name>javax.faces.FACELETS_VIEW_MAPPINGS</param-name>
     <param-value>*.jsf;*.xhtml</param-value>
   </context-param>
+  <context-param>
+    <description>Version del sitio</description>
+    <param-name>app.version</param-name>
+    <param-value>2.0</param-value>
+  </context-param>
   <servlet>
     <servlet-name>Faces Servlet</servlet-name>
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

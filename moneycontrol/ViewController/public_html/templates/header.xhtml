@@ -1,12 +1,12 @@
-<div id="container">
+<div id="container" xmlns:h="http://java.sun.com/jsf/html">
     <div id="header">
         <img src="../images/logo.gif" alt="Money Control" class="logo"/>
         <ul id="toplinks">
             <li>
-                <div id="div_clock">Hora dump: 00:00</div>
+                <h:outputText value="#{dateBean}"/>
             </li>
              
-            <li>Version del sitio: X</li>
+            <li>Version del sitio: <h:outputText value="#{initParam['app.version']}"/></li>
         </ul>
     </div>
     <div id="nav" xmlns:h="http://java.sun.com/jsf/html">
@@ -35,20 +35,22 @@
                 </li>
                 <li>
                     <h:form>
-                        <h:commandButton value="Logout" action="#{mainBean.logout}"/>
+                        <h:commandLink value="Logout" action="#{mainBean.logout}"/>
                     </h:form>
                 </li>
             </h:panelGroup>
-            
-            <h:panelGroup layout="block" rendered="#{!mainBean.logeado}">
-                <li>
-                    NO LOGEADO
-                </li>
-            </h:panelGroup>
              
+            <h:panelGroup layout="block" rendered="#{!mainBean.logeado}">
+                <h:form>
+                        <label for="user">Usuario:</label>
+                         
+                        <h:inputText binding="#{mainBean.nombre}" id="user" size="20"/>
+                        <label for="pass">Contrasena:</label>
+                         
+                        <h:inputSecret binding="#{mainBean.clave}" id="pass" size="20"/>
+                        <h:commandLink value="Entrar" action="#{mainBean.entrar}"/>
+                </h:form>
+            </h:panelGroup>
         </ul>
     </div>
 </div>
-
-
-
