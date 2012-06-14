@@ -1,5 +1,13 @@
 package view;
 
+import java.math.BigDecimal;
+
+import java.util.ArrayList;
+
+import java.util.Arrays;
+
+import java.util.Map;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlInputSecret;
@@ -12,101 +20,156 @@ import javax.faces.event.ActionEvent;
 @SessionScoped
 public class cuentasBean{
     private Usuario usuario;
+    private ArrayList<Cuenta> cuentasList;
+    private Cuenta cuentaSeleccionada;
+    
     private Cuenta[] cuentas;
     private Cuenta cuentaActual;
     private String[] nombres;
     private boolean hayCuentas;
     private HtmlInputText agregarCuenta;
     private HtmlInputText agregarComentario;
-
+    
     public cuentasBean() throws Exception {
         usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        actualizarLista();
+    }
+    
+    public String guardarCuenta(){
+        //get all existing value but set "editable" to false 
+        for (Cuenta c : cuentasList){
+            if(c.isEditable()){
+                c.editarCuenta(c);
+                c.setEditable(false);
+                System.out.println("se guardo " + c.getNombre() + "ID: " + c.getId());
+            }
+        }
+        return null;
+    }
+
+    public String nuevaCuenta() {
+        Cuenta nueva = new Cuenta("Cuenta " + (cuentasList.size() + 1), "", usuario.getNombre());
+        nueva.crearCuenta(nueva);
+        cuentasList.add(nueva);
+        actualizarLista();
+        return null;
+    }
+    
+    public String borrarCuenta() {
+        cuentasList.remove(cuentaSeleccionada);
+        cuentaSeleccionada.borrarCuenta(cuentaSeleccionada.getId());
+        return null;
+    }
+
+    public String editarCuenta() {
+        cuentaSeleccionada.setEditable(true);
+        return null;
+    }
+    
+   
+
+    public void setCuentasList(ArrayList<Cuenta> cuentasList) {
+        this.cuentasList = cuentasList;
+    }
+
+    public ArrayList<Cuenta> getCuentasList() {
+        return cuentasList;
+    }
+    
+    public void actualizarLista(){
         usuario.setCuentas(usuario.getNombre());
+        Cuenta[] cuentas = usuario.getCuentas();
+        this.cuentasList = new ArrayList<Cuenta>();
+        for(int i=0; i<cuentas.length;++i){
+            this.cuentasList.add(cuentas[i]);
+        }
+        
         this.cuentas = usuario.getCuentas();
         if(setHayCuentas()){
-            setNombres();
-            cuentaActual = cuentas[0];
-        }
-    }
-    
-    public void agregarCuenta(ActionEvent actionEvent){
-        int i;
-        if(this.cuentas == null){
-            this.cuentas = new Cuenta[1];
-            this.cuentas[0] = new Cuenta((String)this.agregarCuenta.getValue(), (String)this.agregarComentario.getValue(), usuario.getNombre());
-            return;
-        }
-        Cuenta[] cuentas2 = new Cuenta[cuentas.length+1];
-        for(i = 0; i<cuentas2.length-1;++i){
-            cuentas2[i] = this.cuentas[i];
-        }
-        cuentas2[i] = new Cuenta((String)this.agregarCuenta.getValue(), (String)this.agregarComentario.getValue(), usuario.getNombre());
-        cuentas2[i].crearCuenta(cuentas2[i]);
-        this.cuentas = cuentas2;
-        
-    }
-
-    public void setCuentas(Cuenta[] cuentas) {
-        this.cuentas = cuentas;
-    }
-
-    public Cuenta[] getCuentas() {
-        return cuentas;
-    }
-
-    public void setAgregarCuenta(HtmlInputText agregarCuenta) {
-        this.agregarCuenta = agregarCuenta;
-    }
-
-    public HtmlInputText getAgregarCuenta() {
-        return agregarCuenta;
-    }
-
-    public void setAgregarComentario(HtmlInputText agregarComentario) {
-        this.agregarComentario = agregarComentario;
-    }
-
-    public HtmlInputText getAgregarComentario() {
-        return agregarComentario;
-    }
-    
-    public boolean setHayCuentas(){
-        if(cuentas != null && cuentas.length > 0)
-            this.hayCuentas = true;
-        else
-            this.hayCuentas = false;
-        return this.hayCuentas;
-    }
-        
-    public boolean getHayCuentas(){
-        return hayCuentas;
-    }
-    
-    public void setCuentaActual(String nombreCuentaActual) throws Exception {
-        for(int i = 0; i < cuentas.length ; i++){
-            if(cuentas[i].getNombre() == nombreCuentaActual)
-                cuentaActual = cuentas[i];
+            try{
+                setNombres();
+            }catch (Exception e) {
                 return;
             }
-        throw new Exception("Se pide fijar como cuenta actual una cuenta inexistente");
+            cuentaActual = cuentas[0];
+        }
+        
     }
     
-    public Cuenta getCuentaActual(){
-        return this.cuentaActual;
-    }
     
-    public void setNombres() throws Exception {
-        try{
-            nombres = new String[cuentas.length];
-            for(int i = 0; i < cuentas.length; i++ )
-                nombres[i] = cuentas[i].getNombre();
+    
+    
+    
+    
+    public void setCuentas(Cuenta[] cuentas) {
+            this.cuentas = cuentas;
         }
-        catch(Exception e){
-            throw new Exception("Se intenta obtener nombres de cuentas cuando no hay cuentas");
+
+        public Cuenta[] getCuentas() {
+            return cuentas;
         }
+
+        public void setAgregarCuenta(HtmlInputText agregarCuenta) {
+            this.agregarCuenta = agregarCuenta;
+        }
+
+        public HtmlInputText getAgregarCuenta() {
+            return agregarCuenta;
+        }
+
+        public void setAgregarComentario(HtmlInputText agregarComentario) {
+            this.agregarComentario = agregarComentario;
+        }
+
+        public HtmlInputText getAgregarComentario() {
+            return agregarComentario;
+        }
+        
+        public boolean setHayCuentas(){
+            if(cuentas != null && cuentas.length > 0)
+                this.hayCuentas = true;
+            else
+                this.hayCuentas = false;
+            return this.hayCuentas;
+        }
+            
+        public boolean getHayCuentas(){
+            return hayCuentas;
+        }
+        
+        public void setCuentaActual(String nombreCuentaActual) throws Exception {
+            for(int i = 0; i < cuentas.length ; i++){
+                if(cuentas[i].getNombre() == nombreCuentaActual)
+                    cuentaActual = cuentas[i];
+                    return;
+                }
+            throw new Exception("Se pide fijar como cuenta actual una cuenta inexistente");
+        }
+        
+        public Cuenta getCuentaActual(){
+            return this.cuentaActual;
+        }
+        
+        public void setNombres() throws Exception {
+            try{
+                nombres = new String[cuentas.length];
+                for(int i = 0; i < cuentas.length; i++ )
+                    nombres[i] = cuentas[i].getNombre();
+            }
+            catch(Exception e){
+                throw new Exception("Se intenta obtener nombres de cuentas cuando no hay cuentas");
+            }
+        }
+
+        public String[] getNombres(){
+            return nombres;
+        }
+
+    public void setCuentaSeleccionada(Cuenta cuentaSeleccionada) {
+        this.cuentaSeleccionada = cuentaSeleccionada;
     }
 
-    public String[] getNombres(){
-        return nombres;
+    public Cuenta getCuentaSeleccionada() {
+        return cuentaSeleccionada;
     }
 }

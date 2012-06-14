@@ -5,25 +5,64 @@
     <ui:define name="title">Cuentas</ui:define>
     <ui:define name="body">
         <h1>Cuentas</h1>
-        <table>
-            <tr>
-                <td><h:outputText value="Cuenta"/></td>
-                <td><h:outputText value="Saldo"/></td>
-                <td><h:outputText value="Comentario"/></td>
-            </tr>
-            <ui:repeat var="c" value="#{cuentasBean.cuentas}" varStatus="status">
-                <tr>
-                    <td><h:outputText value="#{c.nombre}"/></td>
-                    <td><h:outputText value="#{c.saldo}"/></td>
-                    <td><h:outputText value="#{c.comentario}"/></td>
-                </tr>
-            </ui:repeat>
-        </table>
         <h:form>
-            <h:inputText binding="#{cuentasBean.agregarCuenta}"/>
-            <h:inputText binding="#{cuentasBean.agregarComentario}"/>
-            <h:commandButton value="Agregar cuenta" actionListener="#{cuentasBean.agregarCuenta}"/>
-        </h:form>
+    	   <h:dataTable value="#{cuentasBean.cuentasList}" var="c"
+    		styleClass="order-table"
+    		headerClass="order-table-header"
+    		rowClasses="order-table-odd-row,order-table-even-row"
+    	   >
+ 
+    	     <h:column>
+ 
+                <f:facet name="header">Nombre</f:facet>
+ 
+    		<h:inputText value="#{c.nombre}" size="20" rendered="#{c.editable}" />
+ 
+    		<h:outputText value="#{c.nombre}" rendered="#{not c.editable}" />
+ 
+    	     </h:column>
+ 
+    	     <h:column>
+ 
+    		<f:facet name="header">Saldo</f:facet>
+ 
+    		<h:inputText value="#{c.saldo}" size="10" rendered="#{c.editable}" />
+ 
+    		<h:outputText value="#{c.saldo}" rendered="#{not c.editable}" />
+ 
+    	     </h:column>
+ 
+    	     <h:column>
+ 
+    		<f:facet name="header">Comentario</f:facet>
+ 
+    		<h:inputText value="#{c.comentario}" size="30" rendered="#{c.editable}" />
+ 
+    		<h:outputText value="#{c.comentario}" rendered="#{not c.editable}" />
+ 
+    	     </h:column>
+ 
+    	     <h:column>
+ 
+    		<f:facet name="header">Acción</f:facet>
+ 
+    		<h:commandLink value="Edit" action="#{cuentasBean.editarCuenta}" 
+                                       rendered="#{not c.editable}">
+                    <f:setPropertyActionListener target="#{cuentasBean.cuentaSeleccionada}" value="#{c}" />
+                </h:commandLink>
+                <h:commandLink value="Borrar" action="#{cuentasBean.borrarCuenta}" 
+                                       rendered="#{not c.editable}">
+                    <f:setPropertyActionListener target="#{cuentasBean.cuentaSeleccionada}" value="#{c}" />
+                </h:commandLink>
+ 
+    	     </h:column>
+ 
+    	  </h:dataTable>
+ 
+    	  <h:commandButton value="Guardar" action="#{cuentasBean.guardarCuenta}" />
+          <h:commandButton value="Nueva cuenta" action="#{cuentasBean.nuevaCuenta}" />
+ 
+      </h:form>
     </ui:define>
 </ui:composition>
 

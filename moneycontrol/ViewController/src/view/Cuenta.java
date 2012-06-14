@@ -14,6 +14,7 @@ public class Cuenta {
     private int saldo;
     private String usuario;
     private int saldo_acumulado;
+    private boolean editable;
     public Cuenta() {
         super();
     }
@@ -25,6 +26,7 @@ public class Cuenta {
         this.comentario = comentario;
         this.saldo = saldo;
         this.usuario = usuario;
+        this.editable = false;
     }
 
     public Cuenta(String nombre, String comentario, String usuario) {
@@ -34,6 +36,7 @@ public class Cuenta {
         this.comentario = comentario;
         this.saldo = 0;
         this.usuario = usuario;
+        this.editable = false;
     }
 
     public void setId(int id) {
@@ -272,5 +275,13 @@ public class Cuenta {
 
     public int getSaldo_acumulado() {
         return saldo_acumulado;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
+    public boolean isEditable() {
+        return editable;
     }
 }

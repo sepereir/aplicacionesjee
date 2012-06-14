@@ -84,10 +84,13 @@ public class categoriasBean{
     }
     
     public void setTransacciones(Cuenta cuenta){
-        categoriaActual.setGastos(cuenta);
+        if(categoriaActual != null)
+            categoriaActual.setGastos(cuenta);
     }
     
     public Transaccion[] getTransacciones(){
-        return categoriaActual.getGastos();
+        if(categoriaActual != null)
+            return categoriaActual.getGastos();
+        return null;
     }
 }

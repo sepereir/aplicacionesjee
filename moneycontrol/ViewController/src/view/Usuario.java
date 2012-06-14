@@ -193,7 +193,7 @@ public class Usuario {
         }
         
         try {
-            rs = st.executeQuery("SELECT * FROM CUENTA WHERE Usuario_nombre = '" + n + "'");
+            rs = st.executeQuery("SELECT * FROM CUENTA WHERE Usuario_nombre = '" + n + "' ORDER BY nombre");
         } catch (SQLException e) {
             try {
                 st.close();
