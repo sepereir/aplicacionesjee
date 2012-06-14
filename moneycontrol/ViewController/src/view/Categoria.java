@@ -23,6 +23,13 @@ public class Categoria {
         this.usuario = usuario;
     }
 
+    public Categoria(String nombre, String usuario) {
+        super();
+        this.id = -1;
+        this.nombre = nombre;
+        this.usuario = usuario;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -262,7 +269,7 @@ public class Categoria {
         }
         
         try {
-            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + x+ " AND tipo = 'Gasto'"
+            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + x+ " AND tipo = 'GASTO'"
                                  + " AND fecha BETWEEN '" + fecha_ini.toString() + "' AND '" + fecha_fin.toString() + "'");
         } catch (SQLException e) {
             try {

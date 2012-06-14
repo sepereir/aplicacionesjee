@@ -33,6 +33,16 @@ public class Transaccion {
         this.idCuenta = idCuenta;
     }
 
+    public Transaccion(int monto, Date fecha, String tipo, int idCategoria, int idCuenta) {
+        super();
+        this.id = -1;
+        this.monto = monto;
+        this.fecha = fecha;
+        this.tipo = tipo;
+        this.idCategoria = idCategoria;
+        this.idCuenta = idCuenta;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -184,7 +194,7 @@ public class Transaccion {
             id = rs.getInt(1);
             rs.close();
             
-            if(t.getTipo() == "Prestamo" && t.getFecha_limite() != null && rs.next()){
+            if(t.getTipo() == "PRESTAMO" && t.getFecha_limite() != null && rs.next()){
                 st = con.prepareStatement("INSERT INTO PRESTAMO(fecha_limite, Transaccion_idTransaccion) VALUES( "
                                  + " '" + t.getFecha_limite() + "',"
                                  + " " + id + ")");
@@ -227,7 +237,7 @@ public class Transaccion {
             id1 = rs.getInt(1);
             rs.close();
             
-            if(t1.getTipo() == "Prestamo" && t1.getFecha_limite() != null && rs.next()){
+            if(t1.getTipo() == "PRESTAMO" && t1.getFecha_limite() != null && rs.next()){
                 st = con.prepareStatement("INSERT INTO PRESTAMO(fecha_limite, Transaccion_idTransaccion) VALUES( "
                                  + " '" + t1.getFecha_limite() + "',"
                                  + " " + id1 + ")");
@@ -245,7 +255,7 @@ public class Transaccion {
             id2 = rs.getInt(1);
             rs.close();
             
-            if(t2.getTipo() == "Prestamo" && t2.getFecha_limite() != null && rs.next()){
+            if(t2.getTipo() == "PRESTAMO" && t2.getFecha_limite() != null && rs.next()){
                 st = con.prepareStatement("INSERT INTO PRESTAMO(fecha_limite, Transaccion_idTransaccion) VALUES( "
                                  + " '" + t2.getFecha_limite() + "',"
                                  + " " + id2 + ")");
