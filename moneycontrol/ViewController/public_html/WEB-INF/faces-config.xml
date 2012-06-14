@@ -58,6 +58,11 @@
             <to-view-id>/login.jspx</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>gotocuentas</from-outcome>
+            <to-view-id>/cuentas.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
     <managed-bean>
         <managed-bean-name>dateBean</managed-bean-name>
