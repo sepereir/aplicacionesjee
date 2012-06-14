@@ -70,28 +70,56 @@
             <h:panelGroup layout="block" rendered="#{mainBean.logeado and cuentasBean.hayCuentas}">
                 <table>
                     <tr>
-                        <td><h:outputText value="Cuenta :" /></td>
-                        <td><h:selectOneMenu id="cuentaGasto" value="#{cuentasBean.cuentaActual.nombre}">
-                                <f:selectItems value="#{cuentasBean.nombres}" />
-                            </h:selectOneMenu></td>
+                        <td>
+                            <h:outputText value="Cuenta :" />
+                        </td>
+                        
+                        <td>
+                            <h:selectOneMenu id="cuentaGasto" value="#{categoriasBean.transacciones}">
+                                <f:selectItems value="#{cuentasBean.nombres}"/>
+                            </h:selectOneMenu>
+                        </td>
                     </tr>
+                    
                     <tr>
-                        <td><h:outputText value="Descripcion"/></td>
-                        <td><h:outputText value="Monto"/></td>
+                        <td>
+                            <h:outputText value="Categoria :" />
+                        </td>
+                        
+                        <td>
+                            <h:selectOneMenu id="categoriaGasto" value="#{categoriasBean.categoriaActual}">
+                                <f:selectItems value="#{categoriasBean.nombres}"/>
+                            </h:selectOneMenu>
+                        </td>
                     </tr>
-                    <ui:repeat var="c" value="#{cuentasBean.cuentas}" varStatus="status">
+
+                    <tr>
+                        <td>
+                            <h:outputText value="Descripcion"/>
+                        </td>
+                        
+                        <td>
+                            <h:outputText value="Monto"/>
+                        </td>
+                    </tr>
+                    <ui:repeat var="c" value="#{categoriasBean.transacciones}" varStatus="status">
                         <tr>
-                            <td>algun gasto</td>
-                            <td>algun monto</td>
+                            <td>
+                                <h:outputText value="#{c.tipo}" />
+                            </td>
+                            
+                            <td>
+                                <h:outputText value="#{c.monto}" />
+                            </td>
                         </tr>
-                    </ui:repeat>
+                    </ui:repeat>                 
                     <tr>
                         <td><h:outputText value="Total" /></td>
                         <td>EL TOTAL</td>
                     </tr>
                     <tr><td>Descripcion <h:inputText /></td></tr>
                     <tr><td>Monto <h:inputText /></td></tr>
-                    <tr><td><a href="../content.html" title="Order Now"> Submit Gato</a></td></tr>
+                    <tr><td><h:button value="Ingresar Gasto"/></td></tr>
                 </table>
             </h:panelGroup>
         </li>

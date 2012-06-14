@@ -19,12 +19,14 @@ public class cuentasBean{
     private HtmlInputText agregarCuenta;
     private HtmlInputText agregarComentario;
 
-    public cuentasBean(){
+    public cuentasBean() throws Exception {
         usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         usuario.setCuentas(usuario.getNombre());
         this.cuentas = usuario.getCuentas();
-        if(cuentas != null && cuentas.length > 0)
+        if(setHayCuentas()){
+            setNombres();
             cuentaActual = cuentas[0];
+        }
     }
     
     public void agregarCuenta(ActionEvent actionEvent){
@@ -68,27 +70,43 @@ public class cuentasBean{
         return agregarComentario;
     }
     
-    public boolean getHayCuentas(){
-        if(cuentas == null || cuentas.length == 0)
-            this.hayCuentas = false;
-        else
+    public boolean setHayCuentas(){
+        if(cuentas != null && cuentas.length > 0)
             this.hayCuentas = true;
+        else
+            this.hayCuentas = false;
+        return this.hayCuentas;
+    }
+        
+    public boolean getHayCuentas(){
         return hayCuentas;
     }
     
-    public void setCuentaActual(Cuenta cuentaActual){
-        this.cuentaActual = cuentaActual;
+    public void setCuentaActual(String nombreCuentaActual) throws Exception {
+        for(int i = 0; i < cuentas.length ; i++){
+            if(cuentas[i].getNombre() == nombreCuentaActual)
+                cuentaActual = cuentas[i];
+                return;
+            }
+        throw new Exception("Se pide fijar como cuenta actual una cuenta inexistente");
     }
     
     public Cuenta getCuentaActual(){
         return this.cuentaActual;
     }
-    public String[] getNombres(){
-        if(getHayCuentas()){
+    
+    public void setNombres() throws Exception {
+        try{
             nombres = new String[cuentas.length];
             for(int i = 0; i < cuentas.length; i++ )
                 nombres[i] = cuentas[i].getNombre();
         }
+        catch(Exception e){
+            throw new Exception("Se intenta obtener nombres de cuentas cuando no hay cuentas");
+        }
+    }
+
+    public String[] getNombres(){
         return nombres;
     }
 }

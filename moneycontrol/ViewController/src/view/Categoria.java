@@ -197,7 +197,7 @@ public class Categoria {
         return flag;
     }
     
-    public boolean setGastos(int x){
+    public boolean setGastos(Cuenta cuenta){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -212,7 +212,9 @@ public class Categoria {
         }
         
         try {
-            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + x + " AND tipo = 'GASTO'");
+            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + this.id
+                                    + " AND Cuenta.idCuenta = " + cuenta.getId()
+                                    + " AND tipo = 'GASTO'");
         } catch (SQLException e) {
             try {
                 st.close();
@@ -234,8 +236,8 @@ public class Categoria {
                         rs.getInt("monto"),
                         rs.getDate("fecha"),
                         rs.getString("tipo"),
-                        x,
-                        rs.getInt("idCuenta")
+                        this.id,
+                        cuenta.getId()
                     );
                 }
                 flag = true;
@@ -254,7 +256,7 @@ public class Categoria {
         return flag;
     }
     
-    public boolean setGastos(int x, Date fecha_ini, Date fecha_fin){
+    public boolean setGastos(Cuenta cuenta, Date fecha_ini, Date fecha_fin){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -269,8 +271,11 @@ public class Categoria {
         }
         
         try {
-            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + x+ " AND tipo = 'GASTO'"
-                                 + " AND fecha BETWEEN '" + fecha_ini.toString() + "' AND '" + fecha_fin.toString() + "'");
+            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + this.id
+                                 + " AND Cuenta.idCuenta = " + cuenta.getId()
+                                 + " AND tipo = 'GASTO'"
+                                 + " AND fecha BETWEEN '" + fecha_ini.toString()
+                                 + "' AND '" + fecha_fin.toString() + "'");
         } catch (SQLException e) {
             try {
                 st.close();
@@ -292,8 +297,8 @@ public class Categoria {
                         rs.getInt("monto"),
                         rs.getDate("fecha"),
                         rs.getString("tipo"),
-                        x,
-                        rs.getInt("idCuenta")
+                        this.id,
+                        cuenta.getId()
                     );
                 }
                 flag = true;
