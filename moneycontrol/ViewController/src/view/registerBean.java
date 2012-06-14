@@ -64,10 +64,13 @@ public class registerBean {
                                 (String)nombre_completo.getValue(), 
                                 (String)clave.getValue(), 
                                 (String)mail.getValue(), false);
+        Conexion.crear();
         if (u.registrarUsuario(u)) {
+            Conexion.cerrar();
             return "success";
         } else {
             estado.setValue("Error en el registro");
+            Conexion.cerrar();
             return "error";
         }
     }
