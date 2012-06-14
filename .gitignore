@@ -174,12 +174,8 @@ pip-log.txt
 *.war
 *.ear
 
-<<<<<<< HEAD
+
 moneycontrol/.data/ViewControler/*
 moneycontrol/.data/Model/*
 moneycontrol/.adf/META-INF/*
 moneycontrol/.data/00000000/*
-=======
-.data/*
-.adf/*
->>>>>>> 61d2f1bb56ff7f3af631a7df61ab5b6c8b3e720e
