@@ -171,6 +171,7 @@ pip-log.txt
 
 # Package Files #
 *.jar
+*.war
 *.ear
 
 .data/*
