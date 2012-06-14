@@ -7,28 +7,15 @@
         <h1>Cuentas</h1>
         <table>
             <tr>
-                <td>
-                    <h:outputText value="Cuenta"/>
-                </td>
-                <td>
-                    <h:outputText value="Saldo"/>
-                </td>
-                <td>
-                    <h:outputText value="Comentario"/>
-                </td>
+                <td><h:outputText value="Cuenta"/></td>
+                <td><h:outputText value="Saldo"/></td>
+                <td><h:outputText value="Comentario"/></td>
             </tr>
-             
             <ui:repeat var="c" value="#{cuentasBean.cuentas}" varStatus="status">
                 <tr>
-                    <td>
-                        <h:outputText value="#{c.nombre}"/>
-                    </td>
-                    <td>
-                        <h:outputText value="#{c.saldo}"/>
-                    </td>
-                    <td>
-                        <h:outputText value="#{c.comentario}"/>
-                    </td>
+                    <td><h:outputText value="#{c.nombre}"/></td>
+                    <td><h:outputText value="#{c.saldo}"/></td>
+                    <td><h:outputText value="#{c.comentario}"/></td>
                 </tr>
             </ui:repeat>
         </table>

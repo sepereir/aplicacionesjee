@@ -11,39 +11,92 @@
 
     <ui:define name="body">
         <div id="container">
-       
-            <ul id="promobox">
-                    <li>
-                        <h3>Ingresos</h3>
-                        <ul>
-                            <li>Aqui poner API</li>
-                            <li>para ingresar ingresos</li>
-                            <li>Una vez el usuario</li>
-                            <li>este logueado</li>
-                            <li>bla</li>
-                            <li>bla</li>
-                            <li>bla</li>
-                            <li>bla</li>
-                        </ul>
-                        <p><a href="../content.html" title="Order Now">Submit Income</a></p>
-                        <p><a href="../hosting.html" title="Order Now">Cancel</a></p>
-                    </li>
-                    <li class="two">
-                        <h3>Gastos</h3>
-                        <ul>
-                            <li>Aqui poner API</li>
-                            <li>para ingresar gastos</li>
-                            <li>Una vez el usuario</li>
-                            <li>este logueado</li>
-                            <li>bla</li>
-                            <li>bla</li>
-                            <li>bla</li>
-                            <li>bla</li>
-                        </ul>
-                        <p><a href="../content.html" title="Order Now">Submit Expense</a></p>
-                        <p><a href="../content.html" title="Order Now">Cancel</a></p>
-                    </li>
-                    <li class="three">
+        <ul id="promobox">
+        <li>
+            <h3>Ingresos</h3>
+            <br /><br />
+            <h:panelGroup layout="block" rendered="#{!mainBean.logeado}">
+                <h4>(demo)</h4><br />
+                <ui:include src="resources/html/ejemplo-ingreso.html" />
+            </h:panelGroup>
+                        
+            <h:panelGroup layout="block" rendered="#{mainBean.logeado and !cuentasBean.hayCuentas}">
+                Usted no posee cuentas <br />
+                <h:button value="Crear Cuenta" outcome="gotocuentas" />
+            </h:panelGroup>
+                        
+            <h:panelGroup layout="block" rendered="#{mainBean.logeado and cuentasBean.hayCuentas}">
+                <table>
+                    <tr>
+                        <td><h:outputText value="Cuenta :" /></td>
+                        <td><h:selectOneMenu id="cuentaIngreso" value="#{cuentasBean.cuentaActual.nombre}">
+                                <f:selectItems value="#{cuentasBean.nombres}" />
+                            </h:selectOneMenu></td>
+                    </tr>
+                    <tr>
+                        <td><h:outputText value="Descripcion"/></td>
+                        <td><h:outputText value="Monto"/></td>
+                    </tr>
+                    <ui:repeat var="c" value="#{cuentasBean.cuentas}" varStatus="status">
+                        <tr>
+                            <td><h:outputText value="#{c.nombre}"/></td>
+                            <td><h:outputText value="#{c.saldo}"/></td>
+                        </tr>
+                    </ui:repeat>
+                    <tr>
+                        <td><h:outputText value="Total" /></td>
+                        <td>EL TOTAL</td>
+                    </tr>
+                    <tr><td>Descripcion <h:inputText /></td></tr>
+                    <tr><td>Monto <h:inputText /></td></tr>
+                    <tr><td><a href="../content.html" title="Order Now"> Submit Income</a></td></tr>
+                </table>
+            </h:panelGroup>
+        </li>
+        <li class="two">
+            <h3>Gastos</h3>
+            <br /><br />
+            
+            <h:panelGroup layout="block" rendered="#{!mainBean.logeado}">
+                <h4>(demo)</h4><br />
+                <ui:include src="resources/html/ejemplo-gastos.html" />
+            </h:panelGroup>           
+            
+            <h:panelGroup layout="block" rendered="#{mainBean.logeado and !cuentasBean.hayCuentas}">
+                Usted no posee cuentas <br />
+                <h:button value="Crear Cuenta" outcome="gotocuentas" />
+            </h:panelGroup>
+            
+            <h:panelGroup layout="block" rendered="#{mainBean.logeado and cuentasBean.hayCuentas}">
+                <table>
+                    <tr>
+                        <td><h:outputText value="Cuenta :" /></td>
+                        <td><h:selectOneMenu id="cuentaGasto" value="#{cuentasBean.cuentaActual.nombre}">
+                                <f:selectItems value="#{cuentasBean.nombres}" />
+                            </h:selectOneMenu></td>
+                    </tr>
+                    <tr>
+                        <td><h:outputText value="Descripcion"/></td>
+                        <td><h:outputText value="Monto"/></td>
+                    </tr>
+                    <ui:repeat var="c" value="#{cuentasBean.cuentas}" varStatus="status">
+                        <tr>
+                            <td>algun gasto</td>
+                            <td>algun monto</td>
+                        </tr>
+                    </ui:repeat>
+                    <tr>
+                        <td><h:outputText value="Total" /></td>
+                        <td>EL TOTAL</td>
+                    </tr>
+                    <tr><td>Descripcion <h:inputText /></td></tr>
+                    <tr><td>Monto <h:inputText /></td></tr>
+                    <tr><td><a href="../content.html" title="Order Now"> Submit Gato</a></td></tr>
+                </table>
+            </h:panelGroup>
+        </li>
+        
+        <li class="three">
                         <h3>Metas</h3>
                         <ul>
                             <li>Aqui poner API</li>

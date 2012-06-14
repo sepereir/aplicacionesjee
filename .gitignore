@@ -173,3 +173,8 @@ pip-log.txt
 *.jar
 *.war
 *.ear
+
+moneycontrol/.data/ViewControler/*
+moneycontrol/.data/Model/*
+moneycontrol/.adf/META-INF/*
+moneycontrol/.data/00000000/*

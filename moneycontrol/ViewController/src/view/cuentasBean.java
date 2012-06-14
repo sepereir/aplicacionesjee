@@ -13,6 +13,9 @@ import javax.faces.event.ActionEvent;
 public class cuentasBean{
     private Usuario usuario;
     private Cuenta[] cuentas;
+    private Cuenta cuentaActual;
+    private String[] nombres;
+    private boolean hayCuentas;
     private HtmlInputText agregarCuenta;
     private HtmlInputText agregarComentario;
 
@@ -20,6 +23,8 @@ public class cuentasBean{
         usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         usuario.setCuentas(usuario.getNombre());
         this.cuentas = usuario.getCuentas();
+        if(cuentas != null && cuentas.length > 0)
+            cuentaActual = cuentas[0];
     }
     
     public void agregarCuenta(ActionEvent actionEvent){
@@ -61,5 +66,29 @@ public class cuentasBean{
 
     public HtmlInputText getAgregarComentario() {
         return agregarComentario;
+    }
+    
+    public boolean getHayCuentas(){
+        if(cuentas == null || cuentas.length == 0)
+            this.hayCuentas = false;
+        else
+            this.hayCuentas = true;
+        return hayCuentas;
+    }
+    
+    public void setCuentaActual(Cuenta cuentaActual){
+        this.cuentaActual = cuentaActual;
+    }
+    
+    public Cuenta getCuentaActual(){
+        return this.cuentaActual;
+    }
+    public String[] getNombres(){
+        if(getHayCuentas()){
+            nombres = new String[cuentas.length];
+            for(int i = 0; i < cuentas.length; i++ )
+                nombres[i] = cuentas[i].getNombre();
+        }
+        return nombres;
     }
 }
