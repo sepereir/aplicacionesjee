@@ -31,12 +31,12 @@
                     </td>
                 </tr>
             </ui:repeat>
-            
-            <h:form>
-                <h:inputText binding="#{cuentasBean.agregarCuenta}"/>
-                <h:commandButton value="Agregar cuenta" actionListener="#{cuentasBean.agregarCuenta}"/>
-            </h:form>
         </table>
+        <h:form>
+            <h:inputText binding="#{cuentasBean.agregarCuenta}"/>
+            <h:inputText binding="#{cuentasBean.agregarComentario}"/>
+            <h:commandButton value="Agregar cuenta" actionListener="#{cuentasBean.agregarCuenta}"/>
+        </h:form>
     </ui:define>
 </ui:composition>
 

@@ -14,6 +14,7 @@ public class cuentasBean{
     private Usuario usuario;
     private Cuenta[] cuentas;
     private HtmlInputText agregarCuenta;
+    private HtmlInputText agregarComentario;
 
     public cuentasBean(){
         usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
@@ -23,16 +24,16 @@ public class cuentasBean{
     
     public void agregarCuenta(ActionEvent actionEvent){
         int i;
-        if(cuentas == null){
-            cuentas = new Cuenta[1];
-            cuentas[0] = new Cuenta((String)this.agregarCuenta.getValue(), "", usuario.getNombre());
+        if(this.cuentas == null){
+            this.cuentas = new Cuenta[1];
+            this.cuentas[0] = new Cuenta((String)this.agregarCuenta.getValue(), (String)this.agregarComentario.getValue(), usuario.getNombre());
             return;
         }
         Cuenta[] cuentas2 = new Cuenta[cuentas.length+1];
         for(i = 0; i<cuentas2.length-1;++i){
             cuentas2[i] = this.cuentas[i];
         }
-        cuentas2[i] = new Cuenta((String)this.agregarCuenta.getValue(), "", usuario.getNombre());
+        cuentas2[i] = new Cuenta((String)this.agregarCuenta.getValue(), (String)this.agregarComentario.getValue(), usuario.getNombre());
         cuentas2[i].crearCuenta(cuentas2[i]);
         this.cuentas = cuentas2;
         
@@ -54,4 +55,11 @@ public class cuentasBean{
         return agregarCuenta;
     }
 
+    public void setAgregarComentario(HtmlInputText agregarComentario) {
+        this.agregarComentario = agregarComentario;
+    }
+
+    public HtmlInputText getAgregarComentario() {
+        return agregarComentario;
+    }
 }

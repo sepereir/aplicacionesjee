@@ -61,7 +61,7 @@ public class mainBean{
     }
     
     public Object logout() {
-        this.logeado = false;
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
         Conexion.cerrar();
         return "gotologin";
     }
