@@ -185,7 +185,8 @@ public class Usuario {
         boolean flag = false;
         
         try {
-            st = con.createStatement();
+            st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                     ResultSet.CONCUR_UPDATABLE);
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
