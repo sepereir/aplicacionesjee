@@ -39,7 +39,7 @@ public class cuentasBean{
         //get all existing value but set "editable" to false 
         for (Cuenta c : cuentasList){
             if(c.isEditable()){
-                c.editarCuenta(c);
+                c.editarCuenta();
                 c.setEditable(false);
                 System.out.println("se guardo " + c.getNombre() + "ID: " + c.getId());
             }
@@ -49,7 +49,7 @@ public class cuentasBean{
 
     public String nuevaCuenta() {
         Cuenta nueva = new Cuenta("Cuenta " + (cuentasList.size() + 1), "", usuario.getNombre());
-        nueva.crearCuenta(nueva);
+        nueva.crearCuenta();
         cuentasList.add(nueva);
         actualizarLista();
         return null;
@@ -57,7 +57,7 @@ public class cuentasBean{
     
     public String borrarCuenta() {
         cuentasList.remove(cuentaSeleccionada);
-        cuentaSeleccionada.borrarCuenta(cuentaSeleccionada.getId());
+        cuentaSeleccionada.borrarCuenta();
         return null;
     }
 
@@ -77,7 +77,7 @@ public class cuentasBean{
     }
     
     public void actualizarLista(){
-        usuario.setCuentas(usuario.getNombre());
+        usuario.setCuentas();
         Cuenta[] cuentas = usuario.getCuentas();
         this.cuentasList = new ArrayList<Cuenta>();
         for(int i=0; i<cuentas.length;++i){

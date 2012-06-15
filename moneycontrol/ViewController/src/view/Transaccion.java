@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.Date;
 
 public class Transaccion {
+    
+    //Variables de instancia
     private int id;
     private int monto;
     private Date fecha;
@@ -18,6 +20,8 @@ public class Transaccion {
     private int idCuenta;
     private String cuenta;
     private Date fecha_limite;
+    
+    //Constructores
     public Transaccion() {
         super();
     }
@@ -42,7 +46,8 @@ public class Transaccion {
         this.idCategoria = idCategoria;
         this.idCuenta = idCuenta;
     }
-
+    
+    //Setters & Getters
     public void setId(int id) {
         this.id = id;
     }
@@ -114,7 +119,9 @@ public class Transaccion {
     public Date getFecha_limite() {
         return fecha_limite;
     }
+    //Fin de Setters & Getters
     
+    //Obtener objeto de la BD
     public boolean getTransaccion(int x){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
@@ -173,7 +180,8 @@ public class Transaccion {
         return flag;
     }
     
-    public boolean crearTransaccion(Transaccion t){
+    //Insertar objeto en la BD
+    public boolean crearTransaccion(){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         PreparedStatement st = null;
@@ -184,29 +192,43 @@ public class Transaccion {
         
         try {
             st = con.prepareStatement("INSERT INTO TRANSACCION(monto, fecha, tipo, Categoria_idCategoria, Cuenta_idCuenta) VALUES("
-                             + " " + t.getMonto() + ","
-                             + " '" + t.getFecha() + "',"
-                             + " '" + t.getTipo() + "',"
-                             + " " + t.getIdCategoria() + ","
-                             + " " + t.getIdCuenta() + ")", Statement.RETURN_GENERATED_KEYS);
+                             + " " + getMonto() + ","
+                             + " '" + getFecha() + "',"
+                             + " '" + getTipo() + "',"
+                             + " " + getIdCategoria() + ","
+                             + " " + getIdCuenta() + ")", Statement.RETURN_GENERATED_KEYS);
             st.executeUpdate();
             rs = st.getGeneratedKeys();
             id = rs.getInt(1);
             rs.close();
             
-            if(t.getTipo() == "PRESTAMO" && t.getFecha_limite() != null && rs.next()){
+            if(getTipo() == "PRESTAMO" && getFecha_limite() != null && rs.next()){
                 st = con.prepareStatement("INSERT INTO PRESTAMO(fecha_limite, Transaccion_idTransaccion) VALUES( "
-                                 + " '" + t.getFecha_limite() + "',"
+                                 + " '" + getFecha_limite() + "',"
                                  + " " + id + ")");
                 st.executeUpdate();
             }
+            
+            rs = st.executeQuery("SELECT tipo, sum(monto) AS suma FROM TRANSACCION"
+                                 + " WHERE idCuenta = " + getIdCuenta()
+                                 + " GROUP BY tipo"
+                                 + " ORDER BY tipo");
+            if(rs.next()){
+                int gasto = rs.getInt("suma");
+                rs.next();
+                int ingreso = rs.getInt("suma");
+                rs.next();
+                int prestamo = rs.getInt("suma");
+                st.executeUpdate("UPDATE CUENTA SET saldo = " + (ingreso - gasto + prestamo) + " WHERE idCuenta = " + getIdCuenta());
+            }
+            
             flag = true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         } finally {
             try{
-                rs.close();
+                if(rs != null) rs.close();
                 if(st != null) st.close();
             } catch(SQLException e){
                 e.printStackTrace();
@@ -216,7 +238,13 @@ public class Transaccion {
         return flag;
     }
     
-    public boolean crearTransaccionInterna(Transaccion t1, Transaccion t2){
+    //Insertar 2 transacciones entre cuentas de la BD
+    static public boolean crearTransaccionInterna(Transaccion t1, Transaccion t2){
+        if((t1.getTipo() == "INGRESO" && t2.getTipo() != "GASTO")
+            || (t1.getTipo() == "GASTO" && t2.getTipo() != "INGRESO"))
+            return false;
+        
+        
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         PreparedStatement st = null;
@@ -271,13 +299,39 @@ public class Transaccion {
                              + " " + t1.getCuenta() + ")");
             st.executeUpdate();
             
+            rs = st.executeQuery("SELECT tipo, sum(monto) AS suma FROM TRANSACCION WHERE idCuenta = " + t1.getIdCuenta() +
+                 " GROUP BY tipo ORDER BY tipo");
+            if (rs.next()) {
+                int gasto = rs.getInt("suma");
+                rs.next();
+                int ingreso = rs.getInt("suma");
+                rs.next();
+                int prestamo = rs.getInt("suma");
+                st.executeUpdate("UPDATE CUENTA SET saldo = " + (ingreso - gasto + prestamo) + " WHERE idCuenta = " +
+                                 t1.getIdCuenta());
+            }
+            rs.close();
+
+
+            rs = st.executeQuery("SELECT tipo, sum(monto) AS suma FROM TRANSACCION WHERE idCuenta = " + t2.getIdCuenta() +
+                 " GROUP BY tipo ORDER BY tipo");
+            if (rs.next()) {
+                int gasto = rs.getInt("suma");
+                rs.next();
+                int ingreso = rs.getInt("suma");
+                rs.next();
+                int prestamo = rs.getInt("suma");
+                st.executeUpdate("UPDATE CUENTA SET saldo = " + (ingreso - gasto + prestamo) + " WHERE idCuenta = " +
+                                 t2.getIdCuenta());
+            }
+            
             flag = true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         } finally {
             try{
-                rs.close();
+                if(rs != null)rs.close();
                 if(st != null) st.close();
             } catch(SQLException e){
                 e.printStackTrace();

@@ -7,14 +7,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Usuario {
+    
+    //Variables de instancia
     private String nombre;
     private String nombre_completo;
     private String clave;
     private String correo;
     private boolean admin;
-    
     private Categoria[] categorias;
     private Cuenta[] cuentas;
+    
+    //Constructores
     public Usuario() {
         super();
     }
@@ -27,7 +30,8 @@ public class Usuario {
         this.correo = correo;
         this.admin = admin;
     }
-
+    
+    //Setters & Getters
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -75,7 +79,9 @@ public class Usuario {
     public Cuenta[] getCuentas() {
         return cuentas;
     }
+    //Fin de Setters & Getters
     
+    //Obtener objeto de la BD
     public boolean getUsuario(String n, String c){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
@@ -125,7 +131,8 @@ public class Usuario {
         return flag;
     }
     
-    public boolean setCategorias(String n){
+    //Obtener categorias de este usuario
+    public boolean setCategorias(){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -141,7 +148,7 @@ public class Usuario {
         }
         
         try {
-            rs = st.executeQuery("SELECT * FROM CATEGORIA WHERE Usuario_nombre = '" + n + "'");
+            rs = st.executeQuery("SELECT * FROM CATEGORIA WHERE Usuario_nombre = '" + getNombre() + "'");
         } catch (SQLException e) {
             try {
                 st.close();
@@ -159,7 +166,7 @@ public class Usuario {
                 rs.beforeFirst();
                 
                 for(int i = 0; i < categorias.length && rs.next(); ++i)
-                    categorias[i] = new Categoria(rs.getInt("idCategoria"), rs.getString("nombre"), n);
+                    categorias[i] = new Categoria(rs.getInt("idCategoria"), rs.getString("nombre"), getNombre());
                 
                 flag = true;
             }
@@ -177,7 +184,8 @@ public class Usuario {
         return flag;
     }
     
-    public boolean setCuentas(String n){
+    //Obtener cuentas de este usuario
+    public boolean setCuentas(){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -193,7 +201,7 @@ public class Usuario {
         }
         
         try {
-            rs = st.executeQuery("SELECT * FROM CUENTA WHERE Usuario_nombre = '" + n + "' ORDER BY nombre");
+            rs = st.executeQuery("SELECT * FROM CUENTA WHERE Usuario_nombre = '" + getNombre() + "' ORDER BY nombre");
         } catch (SQLException e) {
             try {
                 st.close();
@@ -211,7 +219,12 @@ public class Usuario {
                 rs.beforeFirst();
                 
                 for(int i = 0; i < cuentas.length && rs.next(); ++i)
-                    cuentas[i] = new Cuenta(rs.getInt("idCuenta"), rs.getString("nombre"), rs.getString("comentario"), rs.getInt("saldo"), n);
+                    cuentas[i] = new Cuenta(
+                        rs.getInt("idCuenta"),
+                        rs.getString("nombre"),
+                        rs.getString("comentario"),
+                        rs.getInt("saldo"),
+                        getNombre());
                 
                 flag = true;
             }
@@ -229,7 +242,8 @@ public class Usuario {
         return flag;
     }
     
-    public boolean registrarUsuario(Usuario u){
+    //Insertar objeto en la BD
+    public boolean registrarUsuario(){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -244,11 +258,11 @@ public class Usuario {
 
         try {
             st.executeUpdate("INSERT INTO USUARIO(nombre, nombre_completo, contraseña, correo, admin) VALUES("
-                             + " '" + u.getNombre() + "',"
-                             + " '" + u.getNombre_completo() + "',"
-                             + " '" + u.getClave() + "',"
-                             + " '" + u.getCorreo() + "',"
-                             + " '" + (u.isAdmin() ? "1" : "0") + "')");
+                             + " '" + getNombre() + "',"
+                             + " '" + getNombre_completo() + "',"
+                             + " '" + getClave() + "',"
+                             + " '" + getCorreo() + "',"
+                             + " '" + (isAdmin() ? "1" : "0") + "')");
             flag = true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -263,7 +277,8 @@ public class Usuario {
         return flag;
     }
     
-    public boolean editarUsuario(Usuario u){
+    //Actualizar objeto de la BD
+    public boolean editarUsuario(){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -278,11 +293,11 @@ public class Usuario {
         
         try {
             st.executeUpdate("UPDATE USUARIO SET"
-                             + " nombre_completo = '" + u.getNombre_completo() + "',"
-                             + " contraseña = '" + u.getClave() + "',"
-                             + " correo = '" + u.getCorreo() + "',"
-                             + " admin = '" + (u.isAdmin() ? "1" : "0") + "'"
-                             + " WHERE nombre = '" + u.getNombre() + "'");
+                             + " nombre_completo = '" + getNombre_completo() + "',"
+                             + " contraseña = '" + getClave() + "',"
+                             + " correo = '" + getCorreo() + "',"
+                             + " admin = '" + (isAdmin() ? "1" : "0") + "'"
+                             + " WHERE nombre = '" + getNombre() + "'");
             flag = true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -297,6 +312,7 @@ public class Usuario {
         return flag;
     }
     
+    //Borrar objeto de la BD
     public boolean borrarUsuario(String n){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;

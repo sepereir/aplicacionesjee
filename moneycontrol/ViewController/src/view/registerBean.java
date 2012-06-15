@@ -65,7 +65,7 @@ public class registerBean {
                                 (String)clave.getValue(), 
                                 (String)mail.getValue(), false);
         Conexion.crear();
-        if (u.registrarUsuario(u)) {
+        if (u.registrarUsuario()) {
             Conexion.cerrar();
             return "success";
         } else {

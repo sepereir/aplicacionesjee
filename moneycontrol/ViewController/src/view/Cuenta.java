@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.Date;
 
 public class Cuenta {
+    
+    //Variables de instancia
     private int id;
     private String nombre;
     private String comentario;
@@ -15,6 +17,8 @@ public class Cuenta {
     private String usuario;
     private int saldo_acumulado;
     private boolean editable;
+    
+    //Constructores
     public Cuenta() {
         super();
     }
@@ -38,7 +42,8 @@ public class Cuenta {
         this.usuario = usuario;
         this.editable = false;
     }
-
+    
+    //Setters & Getters
     public void setId(int id) {
         this.id = id;
     }
@@ -78,7 +83,9 @@ public class Cuenta {
     public String getUsuario() {
         return usuario;
     }
+    //Fin de Setters & Getters
     
+    //Obtener objeto de la BD
     public boolean getCuenta(int x){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
@@ -129,7 +136,8 @@ public class Cuenta {
         return flag;
     }
     
-    public boolean crearCuenta(Cuenta c){
+    //Insertar objeto en la BD
+    public boolean crearCuenta(){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -144,10 +152,10 @@ public class Cuenta {
 
         try {
             st.executeUpdate("INSERT INTO CUENTA(nombre, comentario, saldo, Usuario_nombre) VALUES("
-                             + " '" + c.getNombre() + "',"
-                             + " '" + c.getComentario() + "',"
+                             + " '" + getNombre() + "',"
+                             + " '" + getComentario() + "',"
                              + " 0,"
-                             + " '" + c.getUsuario() + "')");
+                             + " '" + getUsuario() + "')");
             flag = true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -162,7 +170,8 @@ public class Cuenta {
         return flag;
     }
     
-    public boolean editarCuenta(Cuenta c){
+    //Actualizar objeto de la BD
+    public boolean editarCuenta(){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -177,11 +186,11 @@ public class Cuenta {
         
         try {
             st.executeUpdate("UPDATE CUENTA SET"
-                             + " nombre = '" + c.getNombre() + "',"
-                             + " comentario = '" + c.getComentario() + "',"
-                             + " saldo = " + c.getSaldo() + ","
-                             + " Usuario_nombre = '" + c.getUsuario() + "'"
-                             + " WHERE idCuenta = " + c.getId());
+                             + " nombre = '" + getNombre() + "',"
+                             + " comentario = '" + getComentario() + "',"
+                             + " saldo = " + getSaldo() + ","
+                             + " Usuario_nombre = '" + getUsuario() + "'"
+                             + " WHERE idCuenta = " + getId());
             flag = true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -196,7 +205,8 @@ public class Cuenta {
         return flag;
     }
     
-    public boolean borrarCuenta(int x){
+    //Borrar objeto de la BD
+    public boolean borrarCuenta(){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -210,7 +220,7 @@ public class Cuenta {
         }
         
         try {
-            st.executeUpdate("DELETE FROM CUENTA WHERE idCuenta = " + x);
+            st.executeUpdate("DELETE FROM CUENTA WHERE idCuenta = " + getId());
             flag = true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -225,7 +235,8 @@ public class Cuenta {
         return flag;
     }
     
-    public boolean setSaldo_acumulado(int x, Date fecha){
+    //Obtener el saldo acumulado en una determinada fecha
+    public boolean setSaldo_acumulado(Date fecha){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -240,10 +251,12 @@ public class Cuenta {
         }
         
         try {
-            rs = st.executeQuery("SELECT SUM(monto)"
+            rs = st.executeQuery("SELECT T.tipo, SUM(T.monto) AS suma"
                 + " FROM CUENTA AS C JOIN TRANSACCION AS T ON C.idCuenta = T.Cuenta_idCuenta"
-                + " WHERE C.idCuenta = " + x
-                + " AND T.fecha < '" + fecha.toString() + "'");
+                + " WHERE C.idCuenta = " + getId()
+                + " AND T.fecha < '" + fecha.toString() + "'"
+                + " GROUP BY T.tipo"
+                + " ORDER BY T.tipo");
         } catch (SQLException e) {
             try {
                 st.close();
@@ -256,7 +269,12 @@ public class Cuenta {
         
         try {
             if(rs.next()){
-                this.saldo_acumulado = rs.getInt(1);
+                int gasto = rs.getInt("suma");
+                rs.next();
+                int ingreso = rs.getInt("suma");
+                rs.next();
+                int prestamo = rs.getInt("suma");
+                this.saldo_acumulado = ingreso - gasto + prestamo;
                 flag = true;
             }
         } catch (SQLException e) {
