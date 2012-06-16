@@ -1,11 +1,15 @@
 package view;
 
+import java.util.ArrayList;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.html.HtmlInputSecret;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.component.html.HtmlOutputText;
+import javax.faces.component.html.HtmlPanelGroup;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 @ManagedBean
 @RequestScoped
@@ -16,9 +20,12 @@ public class adminBean {
     private HtmlInputSecret inputClave;
     private HtmlInputSecret claveActual;
     private HtmlOutputText errorText;
+    private ArrayList<Usuario> usuariosList;
+    private Usuario usuarioSeleccionado;
 
     public adminBean() {
         this.usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        if(usuario.isAdmin()) actualizarLista();
     }
 
     public void setInputMail(HtmlInputText inputMail) {
@@ -81,5 +88,47 @@ public class adminBean {
 
     public Usuario getUsuario() {
         return usuario;
+    }
+
+    public void setUsuariosList(ArrayList<Usuario> usuariosList) {
+        this.usuariosList = usuariosList;
+    }
+
+    public ArrayList<Usuario> getUsuariosList() {
+        return usuariosList;
+    }
+
+    public void setUsuarioSeleccionado(Usuario usuarioSeleccionado) {
+        this.usuarioSeleccionado = usuarioSeleccionado;
+    }
+
+    public Usuario getUsuarioSeleccionado() {
+        return usuarioSeleccionado;
+    }
+    
+    public void actualizarLista(){
+        this.usuariosList = Usuario.getAll();
+    }
+    
+    public Object borrarUsuario(){
+        usuariosList.remove(usuarioSeleccionado);
+        usuarioSeleccionado.borrarUsuario();
+        return null;
+    }
+    
+    public Object editarUsuario(){
+        usuarioSeleccionado.setEditable(true);
+        return null;
+    }
+    
+    public Object guardarUsuarios(){
+        for(Usuario u : usuariosList){
+            if(u.isEditable()){
+                System.out.println(u.getClave());
+                u.editarUsuario();
+                u.setEditable(false);
+            }
+        }
+        return null;
     }
 }
