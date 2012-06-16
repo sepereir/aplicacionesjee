@@ -5,6 +5,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.component.html.HtmlInputSecret;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.component.html.HtmlOutputLabel;
+import javax.faces.component.html.HtmlSelectBooleanCheckbox;
 import javax.faces.context.FacesContext;
 
 @ManagedBean
@@ -15,7 +16,8 @@ public class registerBean {
     private HtmlInputText mail;
     private HtmlInputSecret clave;
     private HtmlOutputLabel estado;
-    
+    private HtmlSelectBooleanCheckbox admin;
+
     public registerBean() {
     }
 
@@ -60,6 +62,7 @@ public class registerBean {
     }
     
     public Object registrar() {
+        estado.setValue("");
         Usuario u = new Usuario((String)nombre.getValue(), 
                                 (String)nombre_completo.getValue(), 
                                 (String)clave.getValue(), 
@@ -73,5 +76,25 @@ public class registerBean {
             Conexion.cerrar();
             return "error";
         }
+    }
+
+    public void setAdmin(HtmlSelectBooleanCheckbox admin) {
+        this.admin = admin;
+    }
+
+    public HtmlSelectBooleanCheckbox getAdmin() {
+        return admin;
+    }
+
+    public Object registrarAdmin() {
+        estado.setValue("");
+        Usuario u = new Usuario((String)nombre.getValue(), 
+                                (String)nombre_completo.getValue(), 
+                                (String)clave.getValue(), 
+                                (String)mail.getValue(),
+                                (Boolean)admin.getValue());
+        if (u.registrarUsuario()) return "gotomain";
+        else estado.setValue("Error en el registro");
+        return null;
     }
 }

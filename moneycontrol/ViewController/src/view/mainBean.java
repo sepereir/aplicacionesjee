@@ -38,6 +38,7 @@ public class mainBean{
 
     public Object entrar() {
         // Add event code here...
+        this.estado.setValue("");
         Conexion.crear();
         Usuario u = new Usuario();
         if (u.getUsuario((String)nombre.getValue(), (String)clave.getValue())){
@@ -49,15 +50,9 @@ public class mainBean{
         else{
             //estado.setValue("Usuario y claves incorrectas");
             Conexion.cerrar();
+            this.estado.setValue("Contraseña Incorrecta");
             return null;   
         }
-    }
-
-    public void limpiar(ActionEvent actionEvent) {
-        // Add event code here...
-        this.nombre.setValue("");
-        this.clave.setValue("");
-        estado.setValue("");
     }
     
     public Object logout() {
