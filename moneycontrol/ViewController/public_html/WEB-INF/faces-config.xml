@@ -63,6 +63,11 @@
             <to-view-id>/cuentas.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>gototransacciones</from-outcome>
+            <to-view-id>/transacciones.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
     <managed-bean>
         <managed-bean-name>dateBean</managed-bean-name>
