@@ -13,21 +13,38 @@
            <div id="container">
        
     <ul id="promobox">
+            <h:form>
             <li>
                 <h3>Datos de la cuenta</h3>
                     <ul>
-                        <li><label for="Email">Email</label>
-                            <input type="text" name="Email" value="usuario@gmail.com"/></li>
-                        <li><label for="User">User</label>
-                            <input type="text" name="User" value="usuario"/></li>
-                        <li><label for="Password">Password</label>
-                            <input type="password" name="Password"/></li>
+                        <li>
+                            <h:outputLabel value="Nombre Completo"/>
+                            <h:inputText binding="#{adminBean.inputNombre}"
+                                         value="#{adminBean.usuario.nombre_completo}"/>
+                        </li>
+                        <li>
+                            <h:outputLabel value="E-mail"/>
+                            <h:inputText binding="#{adminBean.inputMail}" value="#{adminBean.usuario.correo}"/>
+                        </li>
+                        <li>
+                            <h:outputLabel value="Contraseña Actual"/>
+                            <h:inputSecret binding="#{adminBean.claveActual}"/>
+                        </li>
+                        <li>
+                            <h:outputLabel value="Contraseña Nueva"/>
+                            <h:inputSecret binding="#{adminBean.inputClave}"/>
+                        </li>
+                        <li>
+                            <h:outputText style="color:Red;" binding="#{adminBean.errorText}"/>
+                        </li>
                     </ul>
                 <div id="sumbit-buttons">
-                    <p><a href="content.html" title="Order Now">Submit</a></p>
-                    <p><a href="hosting.html" title="Order Now">Cancel</a></p>
+                    <p>
+                        <h:commandLink value="Aceptar" action="#{adminBean.cambiarDatos}"/>
+                    </p>
                 </div>
              </li>
+             </h:form>
             <li class="two">
                 <h3>Perfil</h3>
                 <img src="images/profile-photo.jpg" alt="foto" height="100" width="100"/>

@@ -77,13 +77,13 @@ public class cuentasBean{
     }
     
     public void actualizarLista(){
-        usuario.setCuentas();
-        Cuenta[] cuentas = usuario.getCuentas();
-        this.cuentasList = new ArrayList<Cuenta>();
-        for(int i=0; i<cuentas.length;++i){
-            this.cuentasList.add(cuentas[i]);
+        if (usuario.setCuentas()) {
+            Cuenta[] cuentas = usuario.getCuentas();
+            this.cuentasList = new ArrayList<Cuenta>();
+            for (int i = 0; i < cuentas.length; ++i) {
+                this.cuentasList.add(cuentas[i]);
+            }
         }
-        
         this.cuentas = usuario.getCuentas();
         if(setHayCuentas()){
             try{
