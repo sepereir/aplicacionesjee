@@ -22,7 +22,7 @@ public class categoriasBean{
 
     public categoriasBean() throws Exception {
         this.usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        usuario.setCategorias(usuario.getNombre());
+        usuario.setCategorias();
         this.categorias = usuario.getCategorias();
         if(setHayCategorias()){
             setNombres();

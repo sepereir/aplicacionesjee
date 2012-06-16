@@ -9,10 +9,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Categoria {
+    
+    //Variables de instancia
     private int id;
     private String nombre;
     private String usuario;
     private ArrayList<Transaccion> gastos;
+    
+    //Constructores
     public Categoria() {
         super();
     }
@@ -30,7 +34,8 @@ public class Categoria {
         this.nombre = nombre;
         this.usuario = usuario;
     }
-
+    
+    //Setters & Getters
     public void setId(int id) {
         this.id = id;
     }
@@ -58,7 +63,9 @@ public class Categoria {
     public ArrayList<Transaccion> getGastos() {
         return gastos;
     }
+    //Fin de Setters & Getters
     
+    //Obtener objeto de la BD
     public boolean getCategoria(int x){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
@@ -106,7 +113,8 @@ public class Categoria {
         return flag;
     }
     
-    public boolean crearCategoria(Categoria c){
+    //Insertar objeto en la BD
+    public boolean crearCategoria(){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -121,8 +129,8 @@ public class Categoria {
 
         try {
             st.executeUpdate("INSERT INTO CATEGORIA(nombre, Usuario_nombre) VALUES("
-                             + " '" + c.getNombre() + "',"
-                             + " '" + c.getUsuario() + "')");
+                             + " '" + getNombre() + "',"
+                             + " '" + getUsuario() + "')");
             flag = true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -137,7 +145,8 @@ public class Categoria {
         return flag;
     }
     
-    public boolean editarCategoria(Categoria c){
+    //Actualizar objeto de la BD
+    public boolean editarCategoria(){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -152,9 +161,9 @@ public class Categoria {
         
         try {
             st.executeUpdate("UPDATE CATEGORIA SET"
-                             + " nombre = '" + c.getNombre() + "',"
-                             + " Usuario_nombre = '" + c.getUsuario() + "'"
-                             + " WHERE idCategoria = " + c.getId());
+                             + " nombre = '" + getNombre() + "',"
+                             + " Usuario_nombre = '" + getUsuario() + "'"
+                             + " WHERE idCategoria = " + getId());
             flag = true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -169,7 +178,8 @@ public class Categoria {
         return flag;
     }
     
-    public boolean borrarCategoria(int x){
+    //Borrar objeto de la BD
+    public boolean borrarCategoria(){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -183,7 +193,7 @@ public class Categoria {
         }
         
         try {
-            st.executeUpdate("DELETE FROM CATEGORIA WHERE idCategoria = " + x);
+            st.executeUpdate("DELETE FROM CATEGORIA WHERE idCategoria = " + getId());
             flag = true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -198,7 +208,8 @@ public class Categoria {
         return flag;
     }
     
-    public boolean setGastos(Cuenta cuenta){
+    //Obtener gastos de esta cuenta
+    public boolean setGastos(Cuenta c){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -213,8 +224,8 @@ public class Categoria {
         }
         
         try {
-            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + this.id
-                                    + " AND Cuenta.idCuenta = " + cuenta.getId()
+            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + getId()
+                                    + " AND Cuenta.idCuenta = " + c.getId()
                                     + " AND tipo = 'GASTO'");
         } catch (SQLException e) {
             try {
@@ -239,11 +250,11 @@ public class Categoria {
                         rs.getDate("fecha"),
                         rs.getString("tipo"),
                         this.id,
-                        cuenta.getId()
+                        getId()
                     ));
-                
+                }
+
                 flag = true;
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -258,7 +269,8 @@ public class Categoria {
         return flag;
     }
     
-    public boolean setGastos(Cuenta cuenta, Date fecha_ini, Date fecha_fin){
+    //Obtener gastos de una cuenta entre 2 fechas
+    public boolean setGastos(Cuenta c, Date fecha_ini, Date fecha_fin){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -273,8 +285,8 @@ public class Categoria {
         }
         
         try {
-            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + this.id
-                                 + " AND Cuenta.idCuenta = " + cuenta.getId()
+            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + getId()
+                                 + " AND Cuenta.idCuenta = " + c.getId()
                                  + " AND tipo = 'GASTO'"
                                  + " AND fecha BETWEEN '" + fecha_ini.toString()
                                  + "' AND '" + fecha_fin.toString() + "'");
@@ -301,11 +313,11 @@ public class Categoria {
                         rs.getDate("fecha"),
                         rs.getString("tipo"),
                         this.id,
-                        cuenta.getId()
+                        getId()
                     ));
-                
+                }
+
                 flag = true;
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
