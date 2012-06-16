@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<ui:composition template="templates/master.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="title">Cuentas</ui:define>
+    <ui:define name="body">
+        <h1>Cuentas</h1>
+        <h:form>
+    	   <h:dataTable value="#{categoriasBean.categoriasList}" var="c"
+    		styleClass="order-table"
+    		headerClass="order-table-header"
+    		rowClasses="order-table-odd-row,order-table-even-row">
+ 
+    	     <h:column>
+ 
+                <f:facet name="header">Nombre</f:facet>
+ 
+    		<h:inputText value="#{c.nombre}" size="20" rendered="#{c.editable}" />
+ 
+    		<h:outputText value="#{c.nombre}" rendered="#{not c.editable}" />
+ 
+    	     </h:column>
+ 
+    	     <h:column>
+ 
+    		<f:facet name="header">Acción</f:facet>
+ 
+    		<h:commandLink value="Edit" action="#{categoriasBean.editarCategoria}" 
+                                       rendered="#{not c.editable}">
+                    <f:setPropertyActionListener target="#{categoriasBean.categoriaSeleccionada}" value="#{c}" />
+                </h:commandLink>
+                <h:commandLink value="Borrar" action="#{categoriasBean.borrarCategoria}" 
+                                       rendered="#{not c.editable}">
+                    <f:setPropertyActionListener target="#{categoriasBean.categoriaSeleccionada}" value="#{c}" />
+                </h:commandLink>
+ 
+    	     </h:column>
+ 
+    	  </h:dataTable>
+ 
+    	  <h:commandButton value="Guardar" action="#{categoriasBean.guardarCategoria}" />
+          <h:commandButton value="Nueva cuenta" action="#{categoriasBean.nuevaCategoria}" />
+ 
+      </h:form>
+    </ui:define>
+</ui:composition>

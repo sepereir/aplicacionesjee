@@ -250,7 +250,6 @@ public class cuentasBean{
     public void setCuentaSeleccionada(Cuenta cuentaSeleccionada) {
         this.cuentaSeleccionada = cuentaSeleccionada;
     }
-
     public Cuenta getCuentaSeleccionada() {
         return cuentaSeleccionada;
     }

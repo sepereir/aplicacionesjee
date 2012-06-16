@@ -16,6 +16,7 @@ public class Categoria {
     private String usuario;
     private ArrayList<Transaccion> gastos;
     private ArrayList<Transaccion> ingresos;
+    private boolean editable;
     
     //Constructores
     public Categoria() {
@@ -27,6 +28,7 @@ public class Categoria {
         this.id = id;
         this.nombre = nombre;
         this.usuario = usuario;
+        this.editable = false;
     }
 
     public Categoria(String nombre, String usuario) {
@@ -69,6 +71,14 @@ public class Categoria {
         return ingresos;
     }
     //Fin de Setters & Getters
+    
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
+    public boolean isEditable() {
+        return editable;
+    }
     
     //Obtener objeto de la BD
     public boolean getCategoria(int x){

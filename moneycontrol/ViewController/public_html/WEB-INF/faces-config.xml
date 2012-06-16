@@ -68,6 +68,10 @@
             <to-view-id>/transacciones.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>gotocategorias</from-outcome>
+            <to-view-id>/categorias.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <managed-bean>
         <managed-bean-name>dateBean</managed-bean-name>
