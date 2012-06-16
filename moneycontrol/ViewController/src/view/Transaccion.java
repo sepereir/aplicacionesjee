@@ -1,12 +1,13 @@
 package view;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import java.util.Date;
 
 public class Transaccion {
     
@@ -46,7 +47,7 @@ public class Transaccion {
         this.idCategoria = idCategoria;
         this.idCuenta = idCuenta;
     }
-    
+
     //Setters & Getters
     public void setId(int id) {
         this.id = id;
@@ -60,16 +61,16 @@ public class Transaccion {
         this.monto = monto;
     }
 
-    public String getMonto() {
-        return Integer.toString(monto);
+    public int getMonto() {
+        return monto;
     }
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
-    public String getFecha() {
-        return fecha.toString();
+    public Date getFecha() {
+        return fecha;
     }
 
     public void setTipo(String tipo) {
@@ -184,30 +185,37 @@ public class Transaccion {
     public boolean crearTransaccion(){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
-        PreparedStatement st = null;
+        CallableStatement st = null;
         ResultSet rs = null;
         boolean flag = false;
         int id;
         
         try {
-            st = con.prepareStatement("INSERT INTO TRANSACCION(monto, fecha, tipo, Categoria_idCategoria, Cuenta_idCuenta) VALUES("
-                             + " " + getMonto() + ","
-                             + " '" + getFecha() + "',"
-                             + " '" + getTipo() + "',"
-                             + " " + getIdCategoria() + ","
-                             + " " + getIdCuenta() + ")", Statement.RETURN_GENERATED_KEYS);
-            st.executeUpdate();
-            rs = st.getGeneratedKeys();
-            id = rs.getInt(1);
-            rs.close();
+            String insertcmd = "INSERT INTO TRANSACCION(idTransaccion, monto, fecha, tipo, Categoria_idCategoria, Cuenta_idCuenta)"
+                                + "VALUES(Transaccion_idTransaccion_SEQ.NEXTVAL, " + getMonto() + ", ?, "
+                                + "'" + getTipo() + "', " + getIdCategoria() + ", " + getIdCuenta() + ")";
             
+            st = con.prepareCall("BEGIN " + insertcmd + " RETURNING idTransaccion INTO ?; END;");
+
+            st.setDate(1, getFecha());
+            st.registerOutParameter(2, java.sql.Types.VARCHAR);
+            
+            st.execute();
+            id = st.getInt(2);
+
+            st.close();
+
+            /*
+             * NOTA: Diego, el metodo anterior que utilizaste no sirve para bases de datos Oracle, esta solucion
+             * la copie de http://stackoverflow.com/questions/1976625/value-from-last-inserted-row-in-db
+             * 
+
             if(getTipo() == "PRESTAMO" && getFecha_limite() != null && rs.next()){
                 st = con.prepareStatement("INSERT INTO PRESTAMO(fecha_limite, Transaccion_idTransaccion) VALUES( "
-                                 + " '" + getFecha_limite() + "',"
+                                 + " (to_date(" + getFecha_limite() + ", dd/mm/yyyy)),"
                                  + " " + id + ")");
                 st.executeUpdate();
             }
-            
             rs = st.executeQuery("SELECT tipo, sum(monto) AS suma FROM TRANSACCION"
                                  + " WHERE idCuenta = " + getIdCuenta()
                                  + " GROUP BY tipo"
@@ -220,7 +228,8 @@ public class Transaccion {
                 int prestamo = rs.getInt("suma");
                 st.executeUpdate("UPDATE CUENTA SET saldo = " + (ingreso - gasto + prestamo) + " WHERE idCuenta = " + getIdCuenta());
             }
-            
+            */
+
             flag = true;
         } catch (SQLException e) {
             e.printStackTrace();

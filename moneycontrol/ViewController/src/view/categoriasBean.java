@@ -2,6 +2,8 @@ package view;
 
 import java.sql.Connection;
 
+import java.sql.SQLException;
+
 import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
@@ -16,7 +18,6 @@ public class categoriasBean{
     private Usuario usuario;
     private Categoria categoriaActual;
     private Categoria[] categorias;
-    private Transaccion[] transacciones;
     private String[] nombres;
     private boolean hayCategorias;
 
@@ -83,14 +84,5 @@ public class categoriasBean{
         else
             this.hayCategorias = true;
         return this.hayCategorias;
-    }
-    
-    public void setTransacciones(Cuenta cuenta){
-        if(categoriaActual != null)
-            categoriaActual.setGastos(cuenta);
-    }
-    
-    public ArrayList<Transaccion> getTransacciones(){
-        return categoriaActual.getGastos();
     }
 }

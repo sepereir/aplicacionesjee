@@ -15,6 +15,7 @@ public class Categoria {
     private String nombre;
     private String usuario;
     private ArrayList<Transaccion> gastos;
+    private ArrayList<Transaccion> ingresos;
     
     //Constructores
     public Categoria() {
@@ -62,6 +63,10 @@ public class Categoria {
 
     public ArrayList<Transaccion> getGastos() {
         return gastos;
+    }
+    
+    public ArrayList<Transaccion> getIngresos(){
+        return ingresos;
     }
     //Fin de Setters & Getters
     
@@ -210,6 +215,7 @@ public class Categoria {
     
     //Obtener gastos de esta cuenta
     public boolean setGastos(Cuenta c){
+        gastos = new ArrayList<Transaccion>();
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -224,8 +230,8 @@ public class Categoria {
         }
         
         try {
-            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria.idCategoria = " + getId()
-                                    + " AND Cuenta.idCuenta = " + c.getId()
+            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria_idCategoria = " + getId()
+                                    + " AND Cuenta_idCuenta = " + c.getId()
                                     + " AND tipo = 'GASTO'");
         } catch (SQLException e) {
             try {
@@ -238,21 +244,13 @@ public class Categoria {
         }
         
         try {
-            if(rs.next()){
-                rs.last();
-                gastos = new ArrayList<Transaccion>();
-                rs.beforeFirst();
-                
-                while(rs.next())
-                    gastos.add(new Transaccion(
-                        rs.getInt("idTransaccion"),
-                        rs.getInt("monto"),
-                        rs.getDate("fecha"),
-                        rs.getString("tipo"),
-                        this.id,
-                        getId()
-                    ));
-                }
+
+            while (rs.next())
+                gastos.add(new Transaccion(rs.getInt("idTransaccion"),
+                                           rs.getInt("monto"),
+                                           rs.getDate("fecha"),
+                                           rs.getString("tipo"),
+                                           this.id, getId()));
 
                 flag = true;
         } catch (SQLException e) {
@@ -267,6 +265,7 @@ public class Categoria {
         }
         
         return flag;
+        
     }
     
     //Obtener gastos de una cuenta entre 2 fechas
@@ -316,6 +315,60 @@ public class Categoria {
                         getId()
                     ));
                 }
+
+                flag = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                rs.close();            
+                st.close();
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        
+        return flag;
+    }
+    
+    //Obtener ingresos de esta cuenta
+    public boolean setIngresos(Cuenta c) {
+        ingresos = new ArrayList<Transaccion>();
+        Connection con = Conexion.getSessionConn();
+        if(con == null) return false;
+        Statement st;
+        ResultSet rs;        
+        boolean flag = false;
+        
+        try {
+            st = con.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+        try {
+            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria_idCategoria = " + getId()
+                                    + " AND Cuenta_idCuenta = " + c.getId()
+                                    + " AND tipo = 'INGRESO'");
+        } catch (SQLException e) {
+            try {
+                st.close();
+            } catch (SQLException f) {
+                f.printStackTrace();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        
+        try {
+
+            while (rs.next())
+                ingresos.add(new Transaccion(rs.getInt("idTransaccion"),
+                                           rs.getInt("monto"),
+                                           rs.getDate("fecha"),
+                                           rs.getString("tipo"),
+                                           this.id, getId()));
 
                 flag = true;
         } catch (SQLException e) {

@@ -48,7 +48,12 @@ public class cuentasBean{
     }
 
     public String nuevaCuenta() {
-        Cuenta nueva = new Cuenta("Cuenta " + (cuentasList.size() + 1), "", usuario.getNombre());
+        Cuenta nueva;
+        if(cuentasList != null)
+            nueva = new Cuenta("Cuenta " + (cuentasList.size() + 1), "", usuario.getNombre());
+        else
+            nueva = new Cuenta("Cuenta 1", "", usuario.getNombre());
+        
         nueva.crearCuenta();
         cuentasList.add(nueva);
         actualizarLista();
@@ -72,19 +77,23 @@ public class cuentasBean{
         this.cuentasList = cuentasList;
     }
 
-    public ArrayList<Cuenta> getCuentasList() {
+    public ArrayList<Cuenta> getCuentasList() throws Exception {
         return cuentasList;
     }
     
     public void actualizarLista(){
+        
+        this.cuentasList = new ArrayList<Cuenta>();
+        
         if (usuario.setCuentas()) {
             Cuenta[] cuentas = usuario.getCuentas();
-            this.cuentasList = new ArrayList<Cuenta>();
             for (int i = 0; i < cuentas.length; ++i) {
                 this.cuentasList.add(cuentas[i]);
             }
         }
+        
         this.cuentas = usuario.getCuentas();
+        
         if(setHayCuentas()){
             try{
                 setNombres();

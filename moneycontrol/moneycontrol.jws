@@ -25,4 +25,21 @@
       <hash><url n="URL" path="Model/Model.jpr"/></hash>
       <hash><url n="URL" path="ViewController/ViewController.jpr"/></hash>
    </list>
+   <hash n="oracle.jdeveloper.model.PathsConfiguration">
+      <hash n="ApplicationSrcContentSet">
+         <list n="pattern-filters">
+            <string v="+**"/>
+         </list>
+         <list n="url-path">
+            <url path="src/"/>
+         </list>
+      </hash>
+   </hash>
+   <hash n="oracle.mds.internal.dt.ide.CustOptions">
+      <list n="customizationLibraries">
+         <hash>
+            <url n="customization-library" path="../../../Downloads/ojdbc6.jar" jar-entry=""/>
+         </hash>
+      </list>
+   </hash>
 </jws:workspace>

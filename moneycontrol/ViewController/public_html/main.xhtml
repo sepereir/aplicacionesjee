@@ -6,20 +6,19 @@
     <ui:define name="body">
         <div id="container">
             <ul id="promobox">
-                <li></li>
                 <li class="two">
-                    <h3>Gastos</h3>
+                    <h3>Ingesos</h3>
                     <br/>
                     <br/>
-                    <h:form id="cueta">
+                    <h:form>
                         <table>
                             <tr>
                                 <td>
                                     <h:outputText value="Cuenta :"/>
                                 </td>
                                 <td>
-                                    <h:selectOneMenu value="#{transaccionesBean.nombreCuenta}">
-                                        <f:selectItems value="#{transaccionesBean.nombreCuentas}"/>
+                                    <h:selectOneMenu value="#{IngresosBean.nombreCuenta}">
+                                        <f:selectItems value="#{IngresosBean.nombreCuentas}"/>
                                     </h:selectOneMenu>
                                 </td>
                             </tr>
@@ -29,49 +28,127 @@
                                     <h:outputText value="Categoria :"/>
                                 </td>
                                 <td>
-                                    <h:selectOneMenu id="categoriaGasto" value="#{transaccionesBean.nombreCategoria}">
-                                        <f:selectItems value="#{transaccionesBean.nombreCategorias}"/>
+                                    <h:selectOneMenu value="#{IngresosBean.nombreCategoria}">
+                                        <f:selectItems value="#{IngresosBean.nombreCategorias}"/>
                                     </h:selectOneMenu>
                                 </td>
                             </tr>
-                        </table>
-                        <h:dataTable value="#{transaccionesBean.transacciones}" var="t" styleClass="order-table"
-                                     headerClass="order-table-header"
-                                     rowClasses="order-table-odd-row,order-table-even-row">
-                            <h:column>
-                                <f:facet name="header">Fecha</f:facet>
-                                <h:outputText value="#{t.fecha}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Monto</f:facet>
-                                <h:outputText value="#{t.monto}"/>
-                            </h:column>
-                        </h:dataTable>
-                        <table>
+                             
                             <tr>
                                 <td>
-                                    <b>Gastos Totales</b>
-                                </td>
-                                <td>
-                                    <h:outputText value="#{transaccionesBean.total}"/>
+                                    <h:commandButton value="Ver" action="#{IngresosBean.actualizarIngresos}"/>
                                 </td>
                             </tr>
-                             
-                            <tr></tr>
-                             
+                        </table>
+                    </h:form>
+                    <h:dataTable value="#{IngresosBean.ingresos}" var="t" styleClass="order-table"
+                                 headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row">
+                        <h:column>
+                            <f:facet name="header">Fecha</f:facet>
+                            <h:outputLabel value="#{t.fecha}" rendered="true"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Monto</f:facet>
+                            <h:outputLabel value="#{t.monto}"/>
+                        </h:column>
+                    </h:dataTable>
+                    <table>
+                        <tr>
+                            <td>
+                                <b>Gastos Totales</b>
+                            </td>
+                            <td>
+                                <h:outputLabel value="#{IngresosBean.total}"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <h:form>
+                        <table>
                             <tr>
                                 <td>Monto</td>
                                 <td>
-                                    <h:inputText value="#{transaccionesBean.monto}"/>
+                                    <h:inputText value="#{IngresosBean.monto}"/>
                                 </td>
                                 <td>
-                                    <h:commandButton value="Ingresar Gasto" action="#{transaccionesBean.nuevoGasto}"/>
+                                    <h:commandButton value="Ingresar Gasto" action="#{IngresosBean.nuevoIngreso}"/>
                                 </td>
                             </tr>
                         </table>
                     </h:form>
                 </li>
-                 <li class="three">
+                 
+                <li class="two">
+                    <h3>Gastos</h3>
+                    <br/>
+                    <br/>
+                    <h:form>
+                        <table>
+                            <tr>
+                                <td>
+                                    <h:outputText value="Cuenta :"/>
+                                </td>
+                                <td>
+                                    <h:selectOneMenu value="#{GastosBean.nombreCuenta}">
+                                        <f:selectItems value="#{GastosBean.nombreCuentas}"/>
+                                    </h:selectOneMenu>
+                                </td>
+                            </tr>
+                             
+                            <tr>
+                                <td>
+                                    <h:outputText value="Categoria :"/>
+                                </td>
+                                <td>
+                                    <h:selectOneMenu id="categoriaGasto" value="#{GastosBean.nombreCategoria}">
+                                        <f:selectItems value="#{GastosBean.nombreCategorias}"/>
+                                    </h:selectOneMenu>
+                                </td>
+                            </tr>
+                             
+                            <tr>
+                                <td>
+                                    <h:commandButton value="Ver" action="#{GastosBean.actualizarGastos}"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </h:form>
+                    <h:dataTable value="#{GastosBean.gastos}" var="t" styleClass="order-table"
+                                 headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row">
+                        <h:column>
+                            <f:facet name="header">Fecha</f:facet>
+                            <h:outputLabel value="#{t.fecha}" rendered="true"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Monto</f:facet>
+                            <h:outputLabel value="#{t.monto}"/>
+                        </h:column>
+                    </h:dataTable>
+                    <table>
+                        <tr>
+                            <td>
+                                <b>Gastos Totales</b>
+                            </td>
+                            <td>
+                                <h:outputLabel value="#{GastosBean.total}"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <h:form>
+                        <table>
+                            <tr>
+                                <td>Monto</td>
+                                <td>
+                                    <h:inputText value="#{GastosBean.monto}"/>
+                                </td>
+                                <td>
+                                    <h:commandButton value="Ingresar Gasto" action="#{GastosBean.nuevoGasto}"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </h:form>
+                </li>
+                 
+                <li class="three">
                     <h3>Metas</h3>
                     <ul>
                         <li>Aqui poner API</li>

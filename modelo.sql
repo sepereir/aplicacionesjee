@@ -188,6 +188,14 @@ ALTER TABLE Transaccion_Interna
     ) 
 ;
 
+
+
+
+ALTER SESSION SET PLSCOPE_SETTINGS = 'IDENTIFIERS:NONE';
+
+
+
+
 CREATE SEQUENCE Categoria_idCategoria_SEQ 
     NOCACHE 
     ORDER ;
@@ -226,6 +234,11 @@ BEGIN
     SELECT Transaccion_idTransaccion_SEQ.NEXTVAL INTO :NEW.idTransaccion FROM DUAL; 
 END;
 /
+
+
+
+
+ALTER SESSION SET PLSCOPE_SETTINGS = 'IDENTIFIERS:ALL'; 
 
 
 
