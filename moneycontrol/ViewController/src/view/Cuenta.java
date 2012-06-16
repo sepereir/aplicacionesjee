@@ -15,6 +15,7 @@ public class Cuenta {
     private String usuario;
     private int saldo_acumulado;
     private boolean editable;
+    
     public Cuenta() {
         super();
     }

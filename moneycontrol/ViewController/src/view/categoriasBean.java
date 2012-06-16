@@ -2,6 +2,8 @@ package view;
 
 import java.sql.Connection;
 
+import java.util.ArrayList;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.html.HtmlOutputFormat;
@@ -88,9 +90,7 @@ public class categoriasBean{
             categoriaActual.setGastos(cuenta);
     }
     
-    public Transaccion[] getTransacciones(){
-        if(categoriaActual != null)
-            return categoriaActual.getGastos();
-        return null;
+    public ArrayList<Transaccion> getTransacciones(){
+        return categoriaActual.getGastos();
     }
 }

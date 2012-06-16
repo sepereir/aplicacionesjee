@@ -1,177 +1,149 @@
 <?xml version='1.0' encoding='windows-1252'?>
-<ui:composition template="templates/master.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
-    
-   <ui:define name="title">
-        Money Control
-    </ui:define>
-
+<ui:composition template="templates/master.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="title">Money Control</ui:define>
     <ui:define name="body">
         <div id="container">
-        <ul id="promobox">
-        <li>
-            <h3>Ingresos</h3>
-            <br /><br />
-            <h:panelGroup layout="block" rendered="#{!mainBean.logeado}">
-                <h4>(demo)</h4><br />
-                <ui:include src="resources/html/ejemplo-ingreso.html" />
-            </h:panelGroup>
-                        
-            <h:panelGroup layout="block" rendered="#{mainBean.logeado and !cuentasBean.hayCuentas}">
-                Usted no posee cuentas <br />
-                <h:button value="Crear Cuenta" outcome="gotocuentas" />
-            </h:panelGroup>
-                        
-            <h:panelGroup layout="block" rendered="#{mainBean.logeado and cuentasBean.hayCuentas}">
-                <table>
-                    <tr>
-                        <td><h:outputText value="Cuenta :" /></td>
-                        <td><h:selectOneMenu id="cuentaIngreso" value="#{cuentasBean.cuentaActual.nombre}">
-                                <f:selectItems value="#{cuentasBean.nombres}" />
-                            </h:selectOneMenu></td>
-                    </tr>
-                    <tr>
-                        <td><h:outputText value="Descripcion"/></td>
-                        <td><h:outputText value="Monto"/></td>
-                    </tr>
-                    <ui:repeat var="c" value="#{cuentasBean.cuentas}" varStatus="status">
-                        <tr>
-                            <td><h:outputText value="#{c.nombre}"/></td>
-                            <td><h:outputText value="#{c.saldo}"/></td>
-                        </tr>
-                    </ui:repeat>
-                    <tr>
-                        <td><h:outputText value="Total" /></td>
-                        <td>EL TOTAL</td>
-                    </tr>
-                    <tr><td>Descripcion <h:inputText /></td></tr>
-                    <tr><td>Monto <h:inputText /></td></tr>
-                    <tr><td><a href="../content.html" title="Order Now"> Submit Income</a></td></tr>
-                </table>
-            </h:panelGroup>
-        </li>
-        <li class="two">
-            <h3>Gastos</h3>
-            <br /><br />
-            
-            <h:panelGroup layout="block" rendered="#{!mainBean.logeado}">
-                <h4>(demo)</h4><br />
-                <ui:include src="resources/html/ejemplo-gastos.html" />
-            </h:panelGroup>           
-            
-            <h:panelGroup layout="block" rendered="#{mainBean.logeado and !cuentasBean.hayCuentas}">
-                Usted no posee cuentas <br />
-                <h:button value="Crear Cuenta" outcome="gotocuentas" />
-            </h:panelGroup>
-            
-            <h:panelGroup layout="block" rendered="#{mainBean.logeado and cuentasBean.hayCuentas}">
-                <table>
-                    <tr>
-                        <td>
-                            <h:outputText value="Cuenta :" />
-                        </td>
-                        
-                        <td>
-                            <h:selectOneMenu id="cuentaGasto" value="#{categoriasBean.transacciones}">
-                                <f:selectItems value="#{cuentasBean.nombres}"/>
-                            </h:selectOneMenu>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td>
-                            <h:outputText value="Categoria :" />
-                        </td>
-                        
-                        <td>
-                            <h:selectOneMenu id="categoriaGasto" value="#{categoriasBean.categoriaActual}">
-                                <f:selectItems value="#{categoriasBean.nombres}"/>
-                            </h:selectOneMenu>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <h:outputText value="Descripcion"/>
-                        </td>
-                        
-                        <td>
-                            <h:outputText value="Monto"/>
-                        </td>
-                    </tr>
-                    <ui:repeat var="c" value="#{categoriasBean.transacciones}" varStatus="status">
-                        <tr>
-                            <td>
-                                <h:outputText value="#{c.tipo}" />
-                            </td>
-                            
-                            <td>
-                                <h:outputText value="#{c.monto}" />
-                            </td>
-                        </tr>
-                    </ui:repeat>                 
-                    <tr>
-                        <td><h:outputText value="Total" /></td>
-                        <td>EL TOTAL</td>
-                    </tr>
-                    <tr><td>Descripcion <h:inputText /></td></tr>
-                    <tr><td>Monto <h:inputText /></td></tr>
-                    <tr><td><h:button value="Ingresar Gasto"/></td></tr>
-                </table>
-            </h:panelGroup>
-        </li>
-        
-        <li class="three">
-                        <h3>Metas</h3>
-                        <ul>
-                            <li>Aqui poner API</li>
-                            <li>para ingresar metas</li>
-                            <li> o limites de gastos </li>
-                            <li>Una vez el usuario</li>
-                            <li>este logueado</li>
-                            <li>bla</li>
-                            <li>bla</li>
-                            <li>bla</li>
-                        </ul>
-                        <p><a href="../content.html" title="Order Now">Submit Goal</a></p>
-                        <p><a href="../content.html" title="Order Now">Cancel</a></p>
-                    </li>
+            <ul id="promobox">
+                <li></li>
+                <li class="two">
+                    <h3>Gastos</h3>
+                    <br/>
+                    <br/>
+                    <h:form id="cueta">
+                        <table>
+                            <tr>
+                                <td>
+                                    <h:outputText value="Cuenta :"/>
+                                </td>
+                                <td>
+                                    <h:selectOneMenu value="#{transaccionesBean.nombreCuenta}">
+                                        <f:selectItems value="#{transaccionesBean.nombreCuentas}"/>
+                                    </h:selectOneMenu>
+                                </td>
+                            </tr>
+                             
+                            <tr>
+                                <td>
+                                    <h:outputText value="Categoria :"/>
+                                </td>
+                                <td>
+                                    <h:selectOneMenu id="categoriaGasto" value="#{transaccionesBean.nombreCategoria}">
+                                        <f:selectItems value="#{transaccionesBean.nombreCategorias}"/>
+                                    </h:selectOneMenu>
+                                </td>
+                            </tr>
+                        </table>
+                        <h:dataTable value="#{transaccionesBean.transacciones}" var="t" styleClass="order-table"
+                                     headerClass="order-table-header"
+                                     rowClasses="order-table-odd-row,order-table-even-row">
+                            <h:column>
+                                <f:facet name="header">Fecha</f:facet>
+                                <h:outputText value="#{t.fecha}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Monto</f:facet>
+                                <h:outputText value="#{t.monto}"/>
+                            </h:column>
+                        </h:dataTable>
+                        <table>
+                            <tr>
+                                <td>
+                                    <b>Gastos Totales</b>
+                                </td>
+                                <td>
+                                    <h:outputText value="#{transaccionesBean.total}"/>
+                                </td>
+                            </tr>
+                             
+                            <tr></tr>
+                             
+                            <tr>
+                                <td>Monto</td>
+                                <td>
+                                    <h:inputText value="#{transaccionesBean.monto}"/>
+                                </td>
+                                <td>
+                                    <h:commandButton value="Ingresar Gasto" action="#{transaccionesBean.nuevoGasto}"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </h:form>
+                </li>
+                 <li class="three">
+                    <h3>Metas</h3>
+                    <ul>
+                        <li>Aqui poner API</li>
+                         
+                        <li>para ingresar metas</li>
+                         
+                        <li>o limites de gastos</li>
+                         
+                        <li>Una vez el usuario</li>
+                         
+                        <li>este logueado</li>
+                         
+                        <li>bla</li>
+                         
+                        <li>bla</li>
+                         
+                        <li>bla</li>
+                    </ul>
+                    <p>
+                        <a href="../content.html" title="Order Now">Submit Goal</a>
+                    </p>
+                    <p>
+                        <a href="../content.html" title="Order Now">Cancel</a>
+                    </p>
+                </li>
             </ul>
-                
             <div id="newsbox">
-                    <a href="#"><img src="../images/icon_rss.png" alt="Subscribe via RSS" class="right"/></a>
-                    <p class="rss"><a href="../content.html">Keep Updated</a></p>
-                    <h5>Noticias</h5>
-                    <ul>
-                        <li>
-                            <h6><a href="../content.html">Nuevo metodo para Ahorrar!</a></h6>
-                            <p>Alguna noticia fresca de ahorro robada por algun bot de algun blog de ahorro.</p>
-                        </li>
-                        <li>
-                            <h6><a href="../content.html">Noticias de Money Control</a></h6>
-                            <p>Noticias de la pagina.</p>
-                        </li>
-                        <li>
-                            <h6><a href="../content.html">Noticia Economica</a></h6>
-                            <p>BLA.</p>
-                        </li>
-                    </ul>
-            </div>	
+                <a href="#">
+                    <img src="../images/icon_rss.png" alt="Subscribe via RSS" class="right"/></a>
+                <p class="rss">
+                    <a href="../content.html">Keep Updated</a>
+                </p>
+                <h5>Noticias</h5>
+                <ul>
+                    <li>
+                        <h6>
+                            <a href="../content.html">Nuevo metodo para Ahorrar!</a>
+                        </h6>
+                        <p>Alguna noticia fresca de ahorro robada por algun bot de algun blog de ahorro.</p>
+                    </li>
+                     
+                    <li>
+                        <h6>
+                            <a href="../content.html">Noticias de Money Control</a>
+                        </h6>
+                        <p>Noticias de la pagina.</p>
+                    </li>
+                     
+                    <li>
+                        <h6>
+                            <a href="../content.html">Noticia Economica</a>
+                        </h6>
+                        <p>BLA.</p>
+                    </li>
+                </ul>
+            </div>
             <div id="quotes">
-                    <h3>Consejos para Ahorrar</h3>
-                    <p>Lea sobre como administrar su dinero.</p>
-                    <ul>
-                        <li>"bla"</li>
-                        <li>"bla bla"</li>
-                        <li>"bla bla bla"</li>
-                        <li>"bla bla bla"</li>
-                    </ul>
-                    <p><a href="../content.html" title="Read more">Read more customer testimonials</a></p>
+                <h3>Consejos para Ahorrar</h3>
+                <p>Lea sobre como administrar su dinero.</p>
+                <ul>
+                    <li>&quot;bla&quot;</li>
+                     
+                    <li>&quot;bla bla&quot;</li>
+                     
+                    <li>&quot;bla bla bla&quot;</li>
+                     
+                    <li>&quot;bla bla bla&quot;</li>
+                </ul>
+                <p>
+                    <a href="../content.html" title="Read more">Read more customer testimonials</a>
+                </p>
             </div>
         </div>
     </ui:define>
-
 </ui:composition>

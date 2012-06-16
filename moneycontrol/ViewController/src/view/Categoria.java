@@ -5,13 +5,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Categoria {
     private int id;
     private String nombre;
     private String usuario;
-    private Transaccion[] gastos;
+    private ArrayList<Transaccion> gastos;
     public Categoria() {
         super();
     }
@@ -54,7 +55,7 @@ public class Categoria {
         return usuario;
     }
 
-    public Transaccion[] getGastos() {
+    public ArrayList<Transaccion> getGastos() {
         return gastos;
     }
     
@@ -228,18 +229,19 @@ public class Categoria {
         try {
             if(rs.next()){
                 rs.last();
-                gastos = new Transaccion[rs.getRow()];
+                gastos = new ArrayList<Transaccion>();
                 rs.beforeFirst();
-                for(int i = 0; i < gastos.length && rs.next(); ++i){
-                    gastos[i] = new Transaccion(
+                
+                while(rs.next())
+                    gastos.add(new Transaccion(
                         rs.getInt("idTransaccion"),
                         rs.getInt("monto"),
                         rs.getDate("fecha"),
                         rs.getString("tipo"),
                         this.id,
                         cuenta.getId()
-                    );
-                }
+                    ));
+                
                 flag = true;
             }
         } catch (SQLException e) {
@@ -289,18 +291,19 @@ public class Categoria {
         try {
             if(rs.next()){
                 rs.last();
-                gastos = new Transaccion[rs.getRow()];
+                gastos = new ArrayList<Transaccion>();
                 rs.beforeFirst();
-                for(int i = 0; i < gastos.length && rs.next(); ++i){
-                    gastos[i] = new Transaccion(
+                
+                while(rs.next())
+                    gastos.add(new Transaccion(
                         rs.getInt("idTransaccion"),
                         rs.getInt("monto"),
                         rs.getDate("fecha"),
                         rs.getString("tipo"),
                         this.id,
                         cuenta.getId()
-                    );
-                }
+                    ));
+                
                 flag = true;
             }
         } catch (SQLException e) {

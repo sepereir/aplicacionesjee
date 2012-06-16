@@ -55,16 +55,16 @@ public class Transaccion {
         this.monto = monto;
     }
 
-    public int getMonto() {
-        return monto;
+    public String getMonto() {
+        return Integer.toString(monto);
     }
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public String getFecha() {
+        return fecha.toString();
     }
 
     public void setTipo(String tipo) {
@@ -177,8 +177,7 @@ public class Transaccion {
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         PreparedStatement st = null;
-        ResultSet rs;
-        rs = null;
+        ResultSet rs = null;
         boolean flag = false;
         int id;
         
@@ -206,7 +205,7 @@ public class Transaccion {
             return false;
         } finally {
             try{
-                rs.close();
+                if(rs != null) rs.close();
                 if(st != null) st.close();
             } catch(SQLException e){
                 e.printStackTrace();
