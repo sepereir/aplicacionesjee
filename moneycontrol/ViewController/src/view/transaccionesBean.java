@@ -1,5 +1,7 @@
 package view;
 
+import java.util.ArrayList;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.html.HtmlInputSecret;
@@ -17,6 +19,7 @@ public class transaccionesBean{
     private boolean hayTransacciones;
     private HtmlInputText agregarCuenta;
     private HtmlInputText agregarComentario;
+    private ArrayList<Transaccion> transacciones;
     
     public transaccionesBean(){
         this.hayTransacciones = false;
@@ -44,5 +47,13 @@ public class transaccionesBean{
     
     public boolean getHayTransacciones(){
         return this.hayTransacciones;
+    }
+
+    public void setTransacciones() {
+        this.transacciones = this.cuenta.getTransacciones();
+    }
+
+    public ArrayList<Transaccion> getTransacciones() {
+        return transacciones;
     }
 }

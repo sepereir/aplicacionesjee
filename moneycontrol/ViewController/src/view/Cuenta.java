@@ -5,7 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.sql.Date;
 
 public class Cuenta {
     
@@ -17,6 +18,7 @@ public class Cuenta {
     private String usuario;
     private int saldo_acumulado;
     private boolean editable;
+    private ArrayList<Transaccion> transacciones;
     
     //Constructores
     public Cuenta() {
@@ -31,6 +33,7 @@ public class Cuenta {
         this.saldo = saldo;
         this.usuario = usuario;
         this.editable = false;
+        this.transacciones = new ArrayList<Transaccion>();
     }
 
     public Cuenta(String nombre, String comentario, String usuario) {
@@ -41,6 +44,7 @@ public class Cuenta {
         this.saldo = 0;
         this.usuario = usuario;
         this.editable = false;
+        this.transacciones = new ArrayList<Transaccion>();
     }
     
     //Setters & Getters
@@ -82,6 +86,10 @@ public class Cuenta {
 
     public String getUsuario() {
         return usuario;
+    }
+    
+    public ArrayList<Transaccion> getTransacciones() {
+        return transacciones;
     }
     //Fin de Setters & Getters
     
@@ -290,6 +298,65 @@ public class Cuenta {
         
         return flag;
     }
+    
+    public boolean setTransacciones(){
+        return setTransacciones(new Date(0), new Date(System.currentTimeMillis()));
+    }
+    public boolean setTransacciones(Date fechaInicio, Date fechaFin){
+        Connection con = Conexion.getSessionConn();
+        if(con == null) return false;
+        Statement st;
+        ResultSet rs;        
+        boolean flag = false;
+        
+        try {
+            st = con.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+        try {
+            rs = st.executeQuery("SELECT *"
+                + " FROM CUENTA JOIN TRANSACCION ON CUENTA.idCuenta = TRANSACCION.Cuenta_idCuenta"
+                + " WHERE CUENTA.idCuenta = " + getId()
+                + " AND TRANSACCION.fecha < to_date('" + fechaFin.toString() + "','yyyy/mm/dd')"
+                + " AND TRANSACCION.fecha > to_date('" + fechaInicio.toString() + "','yyyy/mm/dd')"
+                + " ORDER BY TRANSACCION.tipo");
+            
+        } catch (SQLException e) {
+            try {
+                st.close();
+            } catch (SQLException f) {
+                f.printStackTrace();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        
+        try {
+            transacciones = new ArrayList<Transaccion>();
+            while(rs.next()){
+                transacciones.add(new Transaccion(rs.getInt("monto"), 
+                                        rs.getDate("fecha"),
+                                        rs.getString("tipo"),
+                                        rs.getInt("Categoria_idCategoria"),
+                                        rs.getInt("idCuenta")));
+                
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                rs.close();            
+                st.close();
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        
+        return flag;
+    }    
 
     public int getSaldo_acumulado() {
         return saldo_acumulado;
@@ -302,4 +369,6 @@ public class Cuenta {
     public boolean isEditable() {
         return editable;
     }
+
+    
 }

@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<ui:composition template="templates/master.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="title">Transacciones</ui:define>
+    <ui:define name="body">
+        <h1>Transacciones</h1>
+        <h:form>
+            <h:outputFormat value="Cuenta: " style="font-size:large;"/>
+            <h:selectOneMenu value="#{cuentasBean.nombreCuentaActual}" label="Cuentas" onchange="this.form.submit()">
+                <f:selectItems value="#{cuentasBean.nombres}"/>
+            </h:selectOneMenu>
+            <h:inputText value="#{cuentasBean.fecha1}"/>
+            <h:inputText value="#{cuentasBean.fecha2}"/>
+            <h:commandButton value="Actualizar" action="#{cuentasBean.actualizarFechas}"/>
+        </h:form>
+
+        <h:form>
+            <ui:repeat var="c" value="#{cuentasBean.cuentasList}" varStatus="status">
+            <h:dataTable value="#{c.transacciones}" var="t" rendered="#{cuentasBean.nombreCuentaActual == c.nombre}">
+                <h:column>
+                    <f:facet name="header">Fecha (dd/mm/aa)</f:facet>
+                    <h:outputText value="#{t.fecha}">
+                        <f:convertDateTime pattern="dd/MM/yy" />
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Tipo</f:facet>
+                    #{t.tipo}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Categoría</f:facet>
+                    #{t.categoria}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Monto</f:facet>
+                    #{t.monto}
+                </h:column>
+            </h:dataTable>
+            </ui:repeat>
+            <h:outputText value="Agregar transacción a esta cuenta: "/>
+            <br/>
+            <h:outputLabel value="Fecha"/>
+            <h:inputText value="#{cuentasBean.ingresarFecha}"/>
+            <h:outputLabel value="Tipo"/>
+            <h:inputText value="#{cuentasBean.ingresarTipo}"/>
+            <h:outputLabel value="Categoría"/>
+            <h:inputText value="#{cuentasBean.ingresarCategoria}"/>
+            <h:outputLabel value="Monto"/>
+            <h:inputText value="#{cuentasBean.ingresarMonto}"/>
+            <h:commandButton value="Agregar" action="#{cuentasBean.agregarTransaccion}"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+
