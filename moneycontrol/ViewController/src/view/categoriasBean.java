@@ -113,7 +113,7 @@ public class categoriasBean{
         this.categorias = usuario.getCategorias();
     }
     
-    public String borrarCategorias() {
+    public String borrarCategoria() {
         categoriasList.remove(categoriaSeleccionada);
         categoriaSeleccionada.borrarCategoria();
         return null;

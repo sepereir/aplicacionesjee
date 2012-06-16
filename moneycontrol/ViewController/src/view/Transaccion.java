@@ -199,7 +199,7 @@ public class Transaccion {
 
             st.setDate(1, getFecha());
             st.registerOutParameter(2, java.sql.Types.VARCHAR);
-            
+
             st.execute();
             id = st.getInt(2);
 
@@ -260,29 +260,27 @@ public class Transaccion {
         rs = null;
         boolean flag = false;
         int id1, id2;
-        
         try {
             st = con.prepareStatement("INSERT INTO TRANSACCION(monto, fecha, tipo, Categoria_idCategoria, Cuenta_idCuenta) VALUES("
                              + " " + t1.getMonto() + ","
-                             + " '" + t1.getFecha() + "',"
+                             + " to_date('" + t1.getFecha() + "','yyyy/mm/dd'),"
                              + " '" + t1.getTipo() + "',"
                              + " " + t1.getIdCategoria() + ","
                              + " " + t1.getIdCuenta() + ")", Statement.RETURN_GENERATED_KEYS);
             st.executeUpdate();
             rs = st.getGeneratedKeys();
+            rs.next();
             id1 = rs.getInt(1);
             rs.close();
-            
             if(t1.getTipo() == "PRESTAMO" && t1.getFecha_limite() != null && rs.next()){
                 st = con.prepareStatement("INSERT INTO PRESTAMO(fecha_limite, Transaccion_idTransaccion) VALUES( "
-                                 + " '" + t1.getFecha_limite() + "',"
+                                 + " to_date('" + t1.getFecha_limite() + "','yyyy/mm/dd'),"
                                  + " " + id1 + ")");
                 st.executeUpdate();
             }
-            
             st = con.prepareStatement("INSERT INTO TRANSACCION(monto, fecha, tipo, Categoria_idCategoria, Cuenta_idCuenta) VALUES("
                              + " " + t2.getMonto() + ","
-                             + " '" + t2.getFecha() + "',"
+                             + " to_date('" + t2.getFecha() + "','yyyy/mm/dd'),"
                              + " '" + t2.getTipo() + "',"
                              + " " + t2.getIdCategoria() + ","
                              + " " + t2.getIdCuenta() + ")", Statement.RETURN_GENERATED_KEYS);
@@ -290,14 +288,12 @@ public class Transaccion {
             rs = st.getGeneratedKeys();
             id2 = rs.getInt(1);
             rs.close();
-            
             if(t2.getTipo() == "PRESTAMO" && t2.getFecha_limite() != null && rs.next()){
                 st = con.prepareStatement("INSERT INTO PRESTAMO(fecha_limite, Transaccion_idTransaccion) VALUES( "
-                                 + " '" + t2.getFecha_limite() + "',"
+                                 + " to_date('" + t2.getFecha_limite() + "','yyyy/mm/dd'),"
                                  + " " + id2 + ")");
                 st.executeUpdate();
             }
-            
             st = con.prepareStatement("INSERT INTO TRANSACCION_INTERNA(Transaccion_idTransaccion, Cuenta_idCuenta) VALUES("
                              + " " + id1 + ","
                              + " " + t2.getCuenta() + ")");
@@ -306,7 +302,6 @@ public class Transaccion {
                              + " " + id2 + ","
                              + " " + t1.getCuenta() + ")");
             st.executeUpdate();
-            
             rs = st.executeQuery("SELECT tipo, sum(monto) AS suma FROM TRANSACCION WHERE idCuenta = " + t1.getIdCuenta() +
                  " GROUP BY tipo ORDER BY tipo");
             if (rs.next()) {
@@ -320,7 +315,6 @@ public class Transaccion {
             }
             rs.close();
 
-
             rs = st.executeQuery("SELECT tipo, sum(monto) AS suma FROM TRANSACCION WHERE idCuenta = " + t2.getIdCuenta() +
                  " GROUP BY tipo ORDER BY tipo");
             if (rs.next()) {
@@ -332,7 +326,6 @@ public class Transaccion {
                 st.executeUpdate("UPDATE CUENTA SET saldo = " + (ingreso - gasto + prestamo) + " WHERE idCuenta = " +
                                  t2.getIdCuenta());
             }
-            
             flag = true;
         } catch (SQLException e) {
             e.printStackTrace();

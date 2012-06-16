@@ -71,6 +71,12 @@
         <navigation-case>
             <from-outcome>gotocategorias</from-outcome>
             <to-view-id>/categorias.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gototransferencias</from-outcome>
+            <to-view-id>/transferencias.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
     </navigation-rule>
     <managed-bean>

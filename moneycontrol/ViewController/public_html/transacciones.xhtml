@@ -43,9 +43,15 @@
             <h:outputLabel value="Fecha"/>
             <h:inputText value="#{cuentasBean.ingresarFecha}"/>
             <h:outputLabel value="Tipo"/>
-            <h:inputText value="#{cuentasBean.ingresarTipo}"/>
+            <h:selectOneMenu value="#{cuentasBean.ingresarTipo}" label="Tipos">
+                <f:selectItems value="#{cuentasBean.tipos}"/>
+            </h:selectOneMenu>
+            
             <h:outputLabel value="Categoría"/>
-            <h:inputText value="#{cuentasBean.ingresarCategoria}"/>
+            <h:selectOneMenu value="#{cuentasBean.ingresarCategoria}" label="Categorias">
+                <f:selectItems value="#{cuentasBean.nombreCategorias}"/>
+            </h:selectOneMenu>
+            
             <h:outputLabel value="Monto"/>
             <h:inputText value="#{cuentasBean.ingresarMonto}"/>
             <h:commandButton value="Agregar" action="#{cuentasBean.agregarTransaccion}"/>
