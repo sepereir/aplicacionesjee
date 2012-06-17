@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.html.HtmlOutputLabel;
 import javax.faces.context.FacesContext;
 
 @ManagedBean
@@ -18,7 +19,8 @@ public class transferBean{
     private ArrayList<Categoria> categoriasList;
     private ArrayList<String> nombreCuentasList, nombreCategoriasList;
     private int monto;
-  
+    private HtmlOutputLabel estado;
+
     public transferBean(){
         usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         usuario.setCuentas();
@@ -55,7 +57,13 @@ public class transferBean{
         }
         Transaccion t1 = new Transaccion(monto, new Date(System.currentTimeMillis()), "GASTO", cat.getId(), c2.getId());
         Transaccion t2 = new Transaccion(monto, new Date(System.currentTimeMillis()), "INGRESO", cat.getId(), c1.getId());
-        Transaccion.crearTransaccionInterna(t1,t2);
+        if(Transaccion.crearTransaccionInterna(t2,t1)){
+            cuentasBean bean = (cuentasBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("cuentasBean");
+            bean.actualizarLista();
+            this.estado.setValue("Transferencia exitosa");
+        }else{
+            this.estado.setValue("Fallo en la transferencia");
+        }
     }
 
     public void setNombreCuentaDesde(String nombreCuentaDesde) {
@@ -128,5 +136,13 @@ public class transferBean{
 
     public ArrayList<Categoria> getCategoriasList() {
         return categoriasList;
+    }
+
+    public void setEstado(HtmlOutputLabel estado) {
+        this.estado = estado;
+    }
+
+    public HtmlOutputLabel getEstado() {
+        return estado;
     }
 }

@@ -23,38 +23,19 @@
                     <h:outputText value="#{t.fecha}">
                         <f:convertDateTime pattern="dd/MM/yy" />
                     </h:outputText>
+                    <f:facet name="footer"><h:outputText value="Total:" style="font-weight:bold;"/></f:facet> 
                 </h:column>
                 <h:column>
                     <f:facet name="header">Tipo</f:facet>
                     #{t.tipo}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Categoría</f:facet>
-                    #{t.categoria}
-                </h:column>
-                <h:column>
                     <f:facet name="header">Monto</f:facet>
                     #{t.monto}
+                    <f:facet name="footer"><h:outputText value="#{c.saldo_acumulado}"/></f:facet> 
                 </h:column>
             </h:dataTable>
-            </ui:repeat>
-            <h:outputText value="Agregar transacción a esta cuenta: "/>
-            <br/>
-            <h:outputLabel value="Fecha"/>
-            <h:inputText value="#{cuentasBean.ingresarFecha}"/>
-            <h:outputLabel value="Tipo"/>
-            <h:selectOneMenu value="#{cuentasBean.ingresarTipo}" label="Tipos">
-                <f:selectItems value="#{cuentasBean.tipos}"/>
-            </h:selectOneMenu>
-            
-            <h:outputLabel value="Categoría"/>
-            <h:selectOneMenu value="#{cuentasBean.ingresarCategoria}" label="Categorias">
-                <f:selectItems value="#{cuentasBean.nombreCategorias}"/>
-            </h:selectOneMenu>
-            
-            <h:outputLabel value="Monto"/>
-            <h:inputText value="#{cuentasBean.ingresarMonto}"/>
-            <h:commandButton value="Agregar" action="#{cuentasBean.agregarTransaccion}"/>
+            </ui:repeat>        
         </h:form>
     </ui:define>
 </ui:composition>
