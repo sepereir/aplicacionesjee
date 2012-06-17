@@ -15,11 +15,17 @@ public class mainBean{
     private HtmlInputSecret clave;
     private HtmlOutputLabel estado;
     private boolean logeado;
-
+    private boolean hayCuentas;
+    private boolean hayCategorias;
+    
     public mainBean() {
         this.logeado = false;
     }
 
+    public void setHayCuenta(){
+        
+    }
+    
     public void setNombre(HtmlInputText nombre) {
         this.nombre = nombre;
     }

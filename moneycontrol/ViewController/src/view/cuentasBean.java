@@ -59,8 +59,12 @@ public class cuentasBean{
     public void actualizarCategorias(){
         this.categorias = usuario.getCategorias();
         nombreCategorias = new ArrayList<String>();
-        for(Categoria c: this.categorias){
-            nombreCategorias.add(c.getNombre());
+        try{
+            for(Categoria c: this.categorias)
+                nombreCategorias.add(c.getNombre());
+        }
+        catch(Exception e){
+            return;
         }
     }
     

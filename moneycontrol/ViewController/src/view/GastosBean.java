@@ -27,6 +27,7 @@ public class GastosBean{
     
     // Total de Gastos
     private int total;
+    private int totalGlobal;
     
     // Listados de elementos necesarios
     private ArrayList<Cuenta> cuentas;
@@ -52,6 +53,7 @@ public class GastosBean{
         nombreCategoria = categoria.getNombre();
         cuenta = cuentas.get(0);
         nombreCuenta = cuenta.getNombre();
+        setTotalGlobal();
         refrescar();
     }
     
@@ -106,6 +108,28 @@ public class GastosBean{
     public int getTotal(){
         return this.total;
     }
+    
+    public void setTotalGlobal() throws Exception {
+        Categoria categoria_backup = categoria;
+        Cuenta cuenta_backup = cuenta;
+    
+        ArrayList<Transaccion> t;
+        totalGlobal = 0;
+        for(Categoria ca : categorias)
+            for(Cuenta cu : cuentas){
+                categoria = ca;
+                cuenta = cu;
+                t = getGastos();
+                for(int i = 0; i < gastos.size(); i++)
+                    totalGlobal += t.get(i).getMonto();
+            }
+        cuenta = cuenta_backup;
+        categoria = categoria_backup;
+    }    
+    public int getTotalGlobal(){
+        return totalGlobal;
+    }
+    
     
     // Listados de elementos necesarios
     public void setCuentas(){
@@ -198,5 +222,8 @@ public class GastosBean{
         refrescar();
     }
     
-    
+    public String calcularTotalGlobal() throws Exception {
+        setTotalGlobal();
+        return Integer.toString(getTotalGlobal());
+    }
 }

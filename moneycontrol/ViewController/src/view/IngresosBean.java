@@ -26,6 +26,7 @@ public class IngresosBean{
     
     // Total de Ingresos
     private int total;
+    private int totalGlobal;
     
     // Listados de elementos necesarios
     private ArrayList<Cuenta> cuentas;
@@ -86,6 +87,7 @@ public class IngresosBean{
     public Transaccion getIngreso(){
         return ingreso;
     }
+    
 
     // Monto a agregar
     public void setMonto(String monto){
@@ -106,6 +108,29 @@ public class IngresosBean{
         return this.total;
     }
     
+    public void setTotalGlobal() throws Exception {
+        Categoria categoria_backup = categoria;
+        Cuenta cuenta_backup = cuenta;
+    
+        ArrayList<Transaccion> t;
+        totalGlobal = 0;
+        System.out.println("AL MENOS EXISTO");
+        for(Categoria ca : categorias)
+            for(Cuenta cu : cuentas){
+                System.out.println("!!!! ---> " + totalGlobal);
+                categoria = ca;
+                cuenta = cu;
+                t = getIngresos();
+                for(int i = 0; i < ingresos.size(); i++)
+                    totalGlobal += t.get(i).getMonto();
+            }
+        cuenta = cuenta_backup;
+        categoria = categoria_backup;
+    }    
+    public int getTotalGlobal(){
+        return totalGlobal;
+    }
+
     // Listados de elementos necesarios
     public void setCuentas(){
         user.setCuentas();
@@ -185,6 +210,7 @@ public class IngresosBean{
         setCategoria();
         setIngresos();
         setTotal();
+        setTotalGlobal();
     }
     
     public void setNewCategoria(ValueChangeEvent e) throws SQLException, Exception {
@@ -197,5 +223,9 @@ public class IngresosBean{
         refrescar();
     }
     
+    public String calcularTotalGlobal() throws Exception {
+        setTotalGlobal();
+        return Integer.toString(getTotalGlobal());
+    }
     
 }

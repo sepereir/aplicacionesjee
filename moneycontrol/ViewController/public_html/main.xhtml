@@ -5,172 +5,231 @@
     <ui:define name="title">Money Control</ui:define>
     <ui:define name="body">
         <div id="container">
-            <ul id="promobox">
-                <li class="two">
-                    <h3>Ingesos</h3>
-                    <br/>
-                    <br/>
-                    <h:form>
-                        <h:selectOneMenu value="#{IngresosBean.nombreCuenta}" onchange="submit()"
-                                         valueChangeListener="#{IngresosBean.setNewCuenta}">
-                            <f:selectItems value="#{IngresosBean.nombreCuentas}"/>
-                        </h:selectOneMenu>
-                        <h:selectOneMenu value="#{IngresosBean.nombreCategoria}" onchange="submit()"
-                                         valueChangeListener="#{IngresosBean.setNewCategoria}">
-                            <f:selectItems value="#{IngresosBean.nombreCategorias}"/>
-                        </h:selectOneMenu>
-                        <h:dataTable value="#{IngresosBean.ingresos}" var="t">
-                            <h:column>
-                                <f:facet name="header">Fecha</f:facet>
-                                <h:outputLabel value="#{t.fecha}" rendered="true"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Monto</f:facet>
-                                <h:outputLabel value="#{t.monto}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Accion</f:facet>
-                                <h:commandLink value="Borrar" action="#{IngresosBean.borrarIngreso}">
-                                    <f:setPropertyActionListener target="#{IngresosBean.ingreso}" value="#{t}"/>
-                                </h:commandLink>
-                            </h:column>
-                        </h:dataTable>
-                        <table>
-                            <tr>
-                                <td>
-                                    <b>Gastos Totales</b>
-                                </td>
-                                <td>
-                                    <h:outputLabel value="#{IngresosBean.total}"/>
-                                </td>
-                            </tr>
-                        </table>
-                        Monto:
-                        <h:inputText value="#{IngresosBean.monto}"/>
-                        <br/>
-                        <h:commandButton value="Nuevo Ingreso" action="#{IngresosBean.nuevoIngreso}"/>
-                    </h:form>
-                </li>
-                 
-                <li class="two">
-                    <h3>Gastos</h3>
-                    <br/>
-                    <br/>
-                    <h:form>
-                        <h:selectOneMenu value="#{GastosBean.nombreCuenta}" onchange="submit()"
-                                         valueChangeListener="#{GastosBean.setNewCuenta}">
-                            <f:selectItems value="#{GastosBean.nombreCuentas}"/>
-                        </h:selectOneMenu>
-                        <h:selectOneMenu value="#{GastosBean.nombreCategoria}" onchange="submit()"
-                                         valueChangeListener="#{GastosBean.setNewCategoria}">
-                            <f:selectItems value="#{GastosBean.nombreCategorias}"/>
-                        </h:selectOneMenu>
-                        <h:dataTable value="#{GastosBean.gastos}" var="t">
-                            <h:column>
-                                <f:facet name="header"><h:outputText value="Fecha" /></f:facet>
-                                <h:outputLabel value="#{t.fecha}" rendered="true"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header"><h:outputText value="Monto" /></f:facet>
-                                <h:outputLabel value="#{t.monto}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header"><h:outputText value="Accion" /></f:facet>
-                                <h:commandLink value="Borrar" action="#{GastosBean.borrarGasto}">
-                                    <f:setPropertyActionListener target="#{GastosBean.gasto}" value="#{t}"/>
-                                </h:commandLink>
-                            </h:column>
-                        </h:dataTable>
-                        <table>
-                            <tr>
-                                <td>
-                                    <b>Gastos Totales</b>
-                                </td>
-                                <td>
-                                    <h:outputLabel value="#{GastosBean.total}"/>
-                                </td>
-                            </tr>
-                        </table>
-                        Monto:
-                        <h:inputText value="#{GastosBean.monto}"/>
-                        <br/>
-                        <h:commandButton value="Nuevo Gasto" action="#{GastosBean.nuevoGasto}"/>
-                    </h:form>
-                </li>
-                 
-                <li class="three">
-                    <h3>Metas</h3>
-                    <ul>
-                        <li>Aqui poner API</li>
-                         
-                        <li>para ingresar metas</li>
-                         
-                        <li>o limites de gastos</li>
-                         
-                        <li>Una vez el usuario</li>
-                         
-                        <li>este logueado</li>
-                         
-                        <li>bla</li>
-                         
-                        <li>bla</li>
-                         
-                        <li>bla</li>
-                    </ul>
-                    <p>
-                        <a href="../content.html" title="Order Now">Submit Goal</a>
-                    </p>
-                    <p>
-                        <a href="../content.html" title="Order Now">Cancel</a>
-                    </p>
-                </li>
-            </ul>
             <div id="newsbox">
                 <a href="#">
                     <img src="../images/icon_rss.png" alt="Subscribe via RSS" class="right"/></a>
                 <p class="rss">
                     <a href="../content.html">Keep Updated</a>
                 </p>
-                <h5>Noticias</h5>
-                <ul>
-                    <li>
-                        <h6>
-                            <a href="../content.html">Nuevo metodo para Ahorrar!</a>
-                        </h6>
-                        <p>Alguna noticia fresca de ahorro robada por algun bot de algun blog de ahorro.</p>
-                    </li>
-                     
-                    <li>
-                        <h6>
-                            <a href="../content.html">Noticias de Money Control</a>
-                        </h6>
-                        <p>Noticias de la pagina.</p>
-                    </li>
-                     
-                    <li>
-                        <h6>
-                            <a href="../content.html">Noticia Economica</a>
-                        </h6>
-                        <p>BLA.</p>
-                    </li>
-                </ul>
+                <h5>Resumen Economico</h5>
+                 
+                <h:panelGroup layout="block"
+                              rendered="#{mainBean.logeado and usuarioBean.tieneCuentas and usuarioBean.tieneCategorias}">
+                    <br/>
+                    <ul>
+                        <li>
+                            <h4>
+                                <h:outputText value="Ingreso Total: "/>
+                                <h:outputText value="#{IngresosBean.totalGlobal}"/>
+                            </h4>
+                        </li>
+                         
+                        <li>
+                            <h4>
+                                <h:outputText value="Gasto Total: "/>
+                                <h:outputText value="#{GastosBean.totalGlobal}"/>
+                            </h4>
+                        </li>
+                         
+                        <li>
+                            <h4>
+                                <h:outputText value="Prestamo Total: "/>
+                                <h:outputText value="#{PrestamosBean.totalGlobal}"/>
+                            </h4>
+                        </li>
+                    </ul>
+                </h:panelGroup>
+                 
+                <h:panelGroup layout="block"
+                              rendered="#{not mainBean.logeado or not usuarioBean.tieneCuentas or not usuarioBean.tieneCategorias}">
+                    <p>
+                        <h:outputText value="Aqui veras el resumen de tu estado economico, pero primero deberas estar registrado y definir al menos una cuenta y una caracteristica"/>
+                    </p>
+                </h:panelGroup>
             </div>
             <div id="quotes">
                 <h3>Consejos para Ahorrar</h3>
-                <p>Lea sobre como administrar su dinero.</p>
-                <ul>
-                    <li>&quot;bla&quot;</li>
-                     
-                    <li>&quot;bla bla&quot;</li>
-                     
-                    <li>&quot;bla bla bla&quot;</li>
-                     
-                    <li>&quot;bla bla bla&quot;</li>
-                </ul>
-                <p>
-                    <a href="../content.html" title="Read more">Read more customer testimonials</a>
-                </p>
+                 
+                <h:graphicImage url="/images/estadistica.jpg" height="120" width="200"/>
             </div>
+            <ul id="promobox">
+                <li class="two">
+                    <h3>Ingesos</h3>
+                    <br/>
+                    <br/>
+                    <h:panelGroup layout="block"
+                                  rendered="#{mainBean.logeado and usuarioBean.tieneCuentas and usuarioBean.tieneCategorias}">
+                        <h:form>
+                            <h:selectOneMenu value="#{IngresosBean.nombreCuenta}" onchange="submit()"
+                                             valueChangeListener="#{IngresosBean.setNewCuenta}">
+                                <f:selectItems value="#{IngresosBean.nombreCuentas}"/>
+                            </h:selectOneMenu>
+                            <h:selectOneMenu value="#{IngresosBean.nombreCategoria}" onchange="submit()"
+                                             valueChangeListener="#{IngresosBean.setNewCategoria}">
+                                <f:selectItems value="#{IngresosBean.nombreCategorias}"/>
+                            </h:selectOneMenu>
+                            <h:dataTable value="#{IngresosBean.ingresos}" var="t">
+                                <h:column>
+                                    <f:facet name="header">Fecha</f:facet>
+                                    <h:outputLabel value="#{t.fecha}" rendered="true"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Monto</f:facet>
+                                    <h:outputLabel value="#{t.monto}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Accion</f:facet>
+                                    <h:commandLink value="Borrar" action="#{IngresosBean.borrarIngreso}">
+                                        <f:setPropertyActionListener target="#{IngresosBean.ingreso}" value="#{t}"/>
+                                    </h:commandLink>
+                                </h:column>
+                            </h:dataTable>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <b>Ingreso Totales</b>
+                                    </td>
+                                    <td>
+                                        <h:outputLabel value="#{IngresosBean.total}"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            Monto:
+                            <h:inputText value="#{IngresosBean.monto}"/>
+                            <br/>
+                            <h:commandButton value="Nuevo Ingreso" action="#{IngresosBean.nuevoIngreso}"/>
+                        </h:form>
+                    </h:panelGroup>
+                    <h:outputLabel value="Debes crear primero una Cuenta"
+                                   rendered="#{mainBean.logeado and (not usuarioBean.tieneCuentas)}"/>
+                    <h:outputLabel value="Debes crear primero una Categoria"
+                                   rendered="#{mainBean.logeado and not usuarioBean.tieneCategorias}"/>
+                    <h:outputLabel value="Disponible solo para usuarios Registrados"
+                                   rendered="#{not mainBean.logeado}"/>
+                </li>
+                 
+                <li class="two">
+                    <h3>Gastos</h3>
+                    <br/>
+                    <br/>
+                    <h:panelGroup layout="block"
+                                  rendered="#{mainBean.logeado and usuarioBean.tieneCuentas and usuarioBean.tieneCategorias}">
+                        <h:form>
+                            <h:selectOneMenu value="#{GastosBean.nombreCuenta}" onchange="submit()"
+                                             valueChangeListener="#{GastosBean.setNewCuenta}">
+                                <f:selectItems value="#{GastosBean.nombreCuentas}"/>
+                            </h:selectOneMenu>
+                            <h:selectOneMenu value="#{GastosBean.nombreCategoria}" onchange="submit()"
+                                             valueChangeListener="#{GastosBean.setNewCategoria}">
+                                <f:selectItems value="#{GastosBean.nombreCategorias}"/>
+                            </h:selectOneMenu>
+                            <h:dataTable value="#{GastosBean.gastos}" var="t">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Fecha"/>
+                                    </f:facet>
+                                    <h:outputLabel value="#{t.fecha}" rendered="true"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Monto"/>
+                                    </f:facet>
+                                    <h:outputLabel value="#{t.monto}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Accion"/>
+                                    </f:facet>
+                                    <h:commandLink value="Borrar" action="#{GastosBean.borrarGasto}">
+                                        <f:setPropertyActionListener target="#{GastosBean.gasto}" value="#{t}"/>
+                                    </h:commandLink>
+                                </h:column>
+                            </h:dataTable>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <b>Gastos Totales</b>
+                                    </td>
+                                    <td>
+                                        <h:outputLabel value="#{GastosBean.total}"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            Monto:
+                            <h:inputText value="#{GastosBean.monto}"/>
+                            <br/>
+                            <h:commandButton value="Nuevo Gasto" action="#{GastosBean.nuevoGasto}"/>
+                        </h:form>
+                    </h:panelGroup>
+                    <h:outputLabel value="Debes crear primero una Cuenta"
+                                   rendered="#{mainBean.logeado and (not usuarioBean.tieneCuentas)}"/>
+                    <h:outputLabel value="Debes crear primero una Categoria"
+                                   rendered="#{mainBean.logeado and not usuarioBean.tieneCategorias}"/>
+                    <h:outputLabel value="Disponible solo para usuarios Registrados"
+                                   rendered="#{not mainBean.logeado}"/>
+                </li>
+                 
+                <li class="three">
+                    <h3>Prestamos</h3>
+                    <br/>
+                    <br/>
+                    <h:panelGroup layout="block"
+                                  rendered="#{mainBean.logeado and usuarioBean.tieneCuentas and usuarioBean.tieneCategorias}">
+                        <h:form>
+                            <h:selectOneMenu value="#{PrestamosBean.nombreCuenta}" onchange="submit()"
+                                             valueChangeListener="#{PrestamosBean.setNewCuenta}">
+                                <f:selectItems value="#{PrestamosBean.nombreCuentas}"/>
+                            </h:selectOneMenu>
+                            <h:selectOneMenu value="#{PrestamosBean.nombreCategoria}" onchange="submit()"
+                                             valueChangeListener="#{PrestamosBean.setNewCategoria}">
+                                <f:selectItems value="#{PrestamosBean.nombreCategorias}"/>
+                            </h:selectOneMenu>
+                            <h:dataTable value="#{PrestamosBean.prestamos}" var="t">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Fecha"/>
+                                    </f:facet>
+                                    <h:outputLabel value="#{t.fecha}" rendered="true"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Monto"/>
+                                    </f:facet>
+                                    <h:outputLabel value="#{t.monto}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Accion"/>
+                                    </f:facet>
+                                    <h:commandLink value="Borrar" action="#{PrestamosBean.borrarPrestamo}">
+                                        <f:setPropertyActionListener target="#{PrestamosBean.prestamo}" value="#{t}"/>
+                                    </h:commandLink>
+                                </h:column>
+                            </h:dataTable>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <b>Total Prestado</b>
+                                    </td>
+                                    <td>
+                                        <h:outputLabel value="#{GastosBean.total}"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            Monto:
+                            <h:inputText value="#{PrestamosBean.monto}"/>
+                            <br/>
+                            <h:commandButton value="Nuevo Prestamo" action="#{PrestamosBean.nuevoPrestamo}"/>
+                        </h:form>
+                    </h:panelGroup>
+                    <h:outputLabel value="Debes crear primero una Cuenta"
+                                   rendered="#{mainBean.logeado and (not usuarioBean.tieneCuentas)}"/>
+                    <h:outputLabel value="Debes crear primero una Categoria"
+                                   rendered="#{mainBean.logeado and not usuarioBean.tieneCategorias}"/>
+                    <h:outputLabel value="Disponible solo para usuarios Registrados"
+                                   rendered="#{not mainBean.logeado}"/>
+                </li>
+            </ul>
         </div>
     </ui:define>
 </ui:composition>

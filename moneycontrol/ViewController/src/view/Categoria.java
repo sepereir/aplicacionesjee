@@ -16,6 +16,7 @@ public class Categoria {
     private String usuario;
     private ArrayList<Transaccion> gastos;
     private ArrayList<Transaccion> ingresos;
+    private ArrayList<Transaccion> prestamos;
     private boolean editable;
     
     //Constructores
@@ -69,6 +70,10 @@ public class Categoria {
     
     public ArrayList<Transaccion> getIngresos(){
         return ingresos;
+    }
+    
+    public ArrayList<Transaccion> getPrestamos(){
+        return prestamos;
     }
     //Fin de Setters & Getters
     
@@ -375,6 +380,59 @@ public class Categoria {
 
             while (rs.next())
                 ingresos.add(new Transaccion(rs.getInt("idTransaccion"),
+                                           rs.getInt("monto"),
+                                           rs.getDate("fecha"),
+                                           rs.getString("tipo"),
+                                           this.id, getId()));
+
+                flag = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                rs.close();            
+                st.close();
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        
+        return flag;
+    }
+    
+    public boolean setPrestamos(Cuenta c) {
+        prestamos = new ArrayList<Transaccion>();
+        Connection con = Conexion.getSessionConn();
+        if(con == null) return false;
+        Statement st;
+        ResultSet rs;        
+        boolean flag = false;
+        
+        try {
+            st = con.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+        try {
+            rs = st.executeQuery("SELECT * FROM TRANSACCION WHERE Categoria_idCategoria = " + getId()
+                                    + " AND Cuenta_idCuenta = " + c.getId()
+                                    + " AND tipo = 'PRESTAMO'");
+        } catch (SQLException e) {
+            try {
+                st.close();
+            } catch (SQLException f) {
+                f.printStackTrace();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        
+        try {
+
+            while (rs.next())
+                prestamos.add(new Transaccion(rs.getInt("idTransaccion"),
                                            rs.getInt("monto"),
                                            rs.getDate("fecha"),
                                            rs.getString("tipo"),
