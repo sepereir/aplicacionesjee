@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<ui:composition template="templates/master.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="title">Transferencias</ui:define>
+    <ui:define name="body">
+        <h1>Transferencias</h1>
+        <h:form>
+            <h:outputFormat value="Monto: " style="font-size:large;"/>
+            <h:inputText value="#{transferBean.monto}"/>
+        
+            <h:outputFormat value="Desde: " style="font-size:large;"/>
+            <h:selectOneMenu value="#{transferBean.nombreCuentaDesde}" label="Cuentas" onchange="this.form.submit()">
+                <f:selectItems value="#{transferBean.nombreCuentasList}"/>
+            </h:selectOneMenu>
+            
+            <h:outputFormat value="Hacia: " style="font-size:large;"/>
+            <h:selectOneMenu value="#{transferBean.nombreCuentaHacia}" label="Cuentas" onchange="this.form.submit()">
+                <f:selectItems value="#{transferBean.nombreCuentasList}"/>
+            </h:selectOneMenu>
+            
+            <h:outputFormat value="Categoria: " style="font-size:large;"/>
+            <h:selectOneMenu value="#{transferBean.nombreCategoria}" label="Cuentas" onchange="this.form.submit()">
+                <f:selectItems value="#{transferBean.nombreCategoriasList}"/>
+            </h:selectOneMenu>
+            <h:commandButton value="Transferir" action="#{transferBean.transferir}"/>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
+
