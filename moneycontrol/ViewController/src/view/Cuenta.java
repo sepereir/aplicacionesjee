@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import java.util.ArrayList;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 
 public class Cuenta {
     
@@ -247,24 +248,23 @@ public class Cuenta {
     public boolean setSaldo_acumulado(Date fecha){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
-        Statement st;
+        PreparedStatement st;
         ResultSet rs;        
         boolean flag = false;
         
         try {
-            st = con.createStatement();
+            st = con.prepareStatement("SELECT TRANSACCION.tipo, SUM(TRANSACCION.monto) AS suma"
+                + " FROM CUENTA JOIN TRANSACCION ON CUENTA.idCuenta = TRANSACCION.Cuenta_idCuenta"
+                + " WHERE CUENTA.idCuenta = " + getId()
+                + " AND TRANSACCION.fecha <= to_date('" + fecha.toString() + "','yyyy/mm/dd')"
+                + " GROUP BY TRANSACCION.tipo"
+                + " ORDER BY TRANSACCION.tipo");
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-        
         try {
-            rs = st.executeQuery("SELECT T.tipo, SUM(T.monto) AS suma"
-                + " FROM CUENTA AS C JOIN TRANSACCION AS T ON C.idCuenta = T.Cuenta_idCuenta"
-                + " WHERE C.idCuenta = " + getId()
-                + " AND T.fecha < '" + fecha.toString() + "'"
-                + " GROUP BY T.tipo"
-                + " ORDER BY T.tipo");
+            rs = st.executeQuery();
         } catch (SQLException e) {
             try {
                 st.close();
@@ -276,15 +276,20 @@ public class Cuenta {
         }
         
         try {
-            if(rs.next()){
-                int gasto = rs.getInt("suma");
-                rs.next();
-                int ingreso = rs.getInt("suma");
-                rs.next();
-                int prestamo = rs.getInt("suma");
-                this.saldo_acumulado = ingreso - gasto + prestamo;
-                flag = true;
+            int gasto = 0;
+            int ingreso = 0;
+            int prestamo = 0;
+            while (rs.next()) {
+                String tipo = rs.getString("tipo");
+                if(tipo.equals("GASTO"))
+                    gasto = rs.getInt("suma");
+                else if(tipo.equals("INGRESO"))
+                    ingreso = rs.getInt("suma");
+                else if(tipo.equals("PRESTAMO"))
+                    prestamo = rs.getInt("suma");
             }
+            this.saldo_acumulado = ingreso - gasto + prestamo;
+            flag = true;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -320,8 +325,8 @@ public class Cuenta {
             rs = st.executeQuery("SELECT *"
                 + " FROM CUENTA JOIN TRANSACCION ON CUENTA.idCuenta = TRANSACCION.Cuenta_idCuenta"
                 + " WHERE CUENTA.idCuenta = " + getId()
-                + " AND TRANSACCION.fecha < to_date('" + fechaFin.toString() + "','yyyy/mm/dd')"
-                + " AND TRANSACCION.fecha > to_date('" + fechaInicio.toString() + "','yyyy/mm/dd')"
+                + " AND TRANSACCION.fecha <= to_date('" + fechaFin.toString() + "','yyyy/mm/dd')"
+                + " AND TRANSACCION.fecha >= to_date('" + fechaInicio.toString() + "','yyyy/mm/dd')"
                 + " ORDER BY TRANSACCION.tipo");
             
         } catch (SQLException e) {

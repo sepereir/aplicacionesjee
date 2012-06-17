@@ -23,21 +23,21 @@
                     <h:outputText value="#{t.fecha}">
                         <f:convertDateTime pattern="dd/MM/yy" />
                     </h:outputText>
+                    <f:facet name="footer"><h:outputText value="Total:" style="font-weight:bold;"/></f:facet> 
                 </h:column>
                 <h:column>
                     <f:facet name="header">Tipo</f:facet>
                     #{t.tipo}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Categoría</f:facet>
-                    #{t.categoria}
-                </h:column>
-                <h:column>
                     <f:facet name="header">Monto</f:facet>
                     #{t.monto}
+                    <f:facet name="footer"><h:outputText value="#{c.saldo_acumulado}"/></f:facet> 
                 </h:column>
             </h:dataTable>
             </ui:repeat>
+            <br/>
+            <br/>
             <h:outputText value="Agregar transacción a esta cuenta: "/>
             <br/>
             <h:outputLabel value="Fecha"/>

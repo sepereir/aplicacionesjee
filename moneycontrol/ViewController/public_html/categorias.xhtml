@@ -4,7 +4,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:define name="title">Categorías</ui:define>
     <ui:define name="body">
-        <h1>Cuentas</h1>
+        <h1>Categorías</h1>
         <h:form>
     	   <h:dataTable value="#{categoriasBean.categoriasList}" var="c"
     		styleClass="order-table"
@@ -39,7 +39,7 @@
     	  </h:dataTable>
  
     	  <h:commandButton value="Guardar" action="#{categoriasBean.guardarCategoria}" />
-          <h:commandButton value="Nueva cuenta" action="#{categoriasBean.nuevaCategoria}" />
+          <h:commandButton value="Nueva categoría" action="#{categoriasBean.nuevaCategoria}" />
  
       </h:form>
     </ui:define>

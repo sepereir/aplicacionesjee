@@ -23,7 +23,8 @@
             <h:selectOneMenu value="#{transferBean.nombreCategoria}" label="Cuentas" onchange="this.form.submit()">
                 <f:selectItems value="#{transferBean.nombreCategoriasList}"/>
             </h:selectOneMenu>
-            <h:commandButton value="Transferir" action="#{transferBean.transferir}"/>
+            <h:commandButton value="Transferir" action="#{transferBean.transferir}"/><br/>
+            <h:outputLabel value="" binding="#{transferBean.estado}" style="color:Green; font-size:large;"/>
         </h:form>
 
     </ui:define>

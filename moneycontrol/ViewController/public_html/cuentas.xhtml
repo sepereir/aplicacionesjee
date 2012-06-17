@@ -25,9 +25,7 @@
  
     		<f:facet name="header">Saldo</f:facet>
  
-    		<h:inputText value="#{c.saldo}" size="10" rendered="#{c.editable}" />
- 
-    		<h:outputText value="#{c.saldo}" rendered="#{not c.editable}" />
+    		<h:outputText value="#{c.saldo}"/>
  
     	     </h:column>
  
@@ -45,7 +43,7 @@
  
     		<f:facet name="header">Acción</f:facet>
  
-    		<h:commandLink value="Edit" action="#{cuentasBean.editarCuenta}" 
+    		<h:commandLink value="Edit " action="#{cuentasBean.editarCuenta}" 
                                        rendered="#{not c.editable}">
                     <f:setPropertyActionListener target="#{cuentasBean.cuentaSeleccionada}" value="#{c}" />
                 </h:commandLink>

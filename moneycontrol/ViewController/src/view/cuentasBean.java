@@ -134,6 +134,7 @@ public class cuentasBean{
                         fin = new Date(ds.parse(fecha2).getTime());
                     
                     c.setTransacciones(inicio, fin);
+                    c.setSaldo_acumulado(fin);
                     //System.out.println("Se parsea a " + inicio + " " + fin);
                     break;
                 }catch(Exception e){
@@ -173,14 +174,23 @@ public class cuentasBean{
     }
     
     public void actualizarLista(){
-        
+        Date fin = new Date(System.currentTimeMillis());
+        SimpleDateFormat ds = new SimpleDateFormat("dd/MM/yy");
         this.cuentasList = new ArrayList<Cuenta>();
-        
+        try{
+            if(fecha2 == null || fecha2.equals(""))
+                fin = new Date(System.currentTimeMillis());
+            else
+                fin = new Date(ds.parse(fecha2).getTime());
+        }catch(Exception e){
+            System.out.println("no se pudo parsear");
+        }
         if (usuario.setCuentas()) {
             Cuenta[] cuentas = usuario.getCuentas();
             for (int i = 0; i < cuentas.length; ++i) {
                 this.cuentasList.add(cuentas[i]);
                 cuentasList.get(i).setTransacciones();
+                cuentasList.get(i).setSaldo_acumulado(fin);
             }
         }
         
