@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.util.ArrayList;
+
 public class Usuario {
     
     //Variables de instancia
@@ -16,6 +18,8 @@ public class Usuario {
     private boolean admin;
     private Categoria[] categorias;
     private Cuenta[] cuentas;
+    ArrayList<Categoria> categoriasList;
+    ArrayList<Cuenta> cuentasList;
     
     //Constructores
     public Usuario() {
@@ -76,8 +80,22 @@ public class Usuario {
         return categorias;
     }
 
+    public ArrayList<Categoria> getCategoriasList(){
+        categoriasList = new ArrayList<Categoria>();
+        for(Categoria c : getCategorias())
+            categoriasList.add(c);
+        return categoriasList;
+    }
+
     public Cuenta[] getCuentas() {
         return cuentas;
+    }
+    
+    public ArrayList<Cuenta> getCuentasList(){
+        cuentasList = new ArrayList<Cuenta>();
+        for(Cuenta c : getCuentas())
+            cuentasList.add(c);
+        return cuentasList;        
     }
     //Fin de Setters & Getters
     
