@@ -35,6 +35,9 @@ public class cuentasBean{
     private String ingresarTipo;
     private String ingresarCategoria;
     private int ingresarMonto;
+    private String[] tipos = {"INGRESO", "GASTO"};
+    private Categoria[] categorias;
+    private ArrayList<String> nombreCategorias;
     
     private Cuenta[] cuentas;
     private Cuenta cuentaActual;
@@ -45,10 +48,20 @@ public class cuentasBean{
     
     public cuentasBean() throws Exception {
         usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        usuario.setCategorias();
         this.fecha1 = "";
         this.fecha2 = "";
+        actualizarCategorias();
         actualizarLista();
         actualizarFechas();
+    }
+    
+    public void actualizarCategorias(){
+        this.categorias = usuario.getCategorias();
+        nombreCategorias = new ArrayList<String>();
+        for(Categoria c: this.categorias){
+            nombreCategorias.add(c.getNombre());
+        }
     }
     
     public String guardarCuenta(){
@@ -143,10 +156,13 @@ public class cuentasBean{
                         System.out.println("No se pudo parsear " + fecha1 + " " + fecha2);
                     }
                 }
-                Categoria cat = new Categoria(ingresarCategoria, usuario.getNombre());
-                cat.crearCategoria();
-                Transaccion tx = new Transaccion(ingresarMonto, fecha, ingresarTipo, cat.getId() , c.getId());
-                tx.crearTransaccion();
+
+                for(Categoria cat: categorias){
+                    if(cat.getNombre().equals(ingresarCategoria)){
+                        Transaccion tx = new Transaccion(ingresarMonto, fecha, ingresarTipo, cat.getId() , c.getId());
+                        tx.crearTransaccion();
+                    }
+                }
                 break;
             }
         }
@@ -308,5 +324,29 @@ public class cuentasBean{
 
     public String getIngresarCategoria() {
         return ingresarCategoria;
+    }
+
+    public void setTipos(String[] tipos) {
+        this.tipos = tipos;
+    }
+
+    public String[] getTipos() {
+        return tipos;
+    }
+
+    public void setCategorias(Categoria[] categorias) {
+        this.categorias = categorias;
+    }
+
+    public Categoria[] getCategorias() {
+        return categorias;
+    }
+
+    public void setNombreCategorias(ArrayList<String> nombreCategorias) {
+        this.nombreCategorias = nombreCategorias;
+    }
+
+    public ArrayList<String> getNombreCategorias() {
+        return nombreCategorias;
     }
 }

@@ -20,7 +20,7 @@ public class transaccionesBean{
     private HtmlInputText agregarCuenta;
     private HtmlInputText agregarComentario;
     private ArrayList<Transaccion> transacciones;
-    
+  
     public transaccionesBean(){
         this.hayTransacciones = false;
     }

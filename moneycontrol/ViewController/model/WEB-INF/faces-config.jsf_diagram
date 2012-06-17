@@ -85,7 +85,7 @@
       <property
          name="description">Navigation Case</property>
       <property
-         name="sdm:polyPoints">L72,281.0,268.64355,153.67383,323.48828,T50</property>
+         name="sdm:polyPoints">L77,281.0,272.14355,153.67383,323.48828,T50</property>
    </NavigationCase>
    <Page
       id="Page12">
@@ -163,7 +163,7 @@
       <property
          name="description">Navigation Case</property>
       <property
-         name="sdm:polyPoints">L61,276.60394,261.64355,107.01367,232.89062,R50</property>
+         name="sdm:polyPoints">L66,274.58282,265.14355,107.01367,232.89062,R50</property>
    </NavigationCase>
    <NavigationCase
       islink="true"
@@ -223,7 +223,7 @@
       <property
          name="description">Navigation Case</property>
       <property
-         name="sdm:polyPoints">R45,353.0,251.14355,503.01074,244.89062,L50</property>
+         name="sdm:polyPoints">R50,354.1105,254.64355,503.01074,244.89062,L50</property>
    </NavigationCase>
    <NavigationCase
       islink="true"
@@ -235,7 +235,7 @@
       <property
          name="description">Navigation Case</property>
       <property
-         name="sdm:polyPoints">L50,277.33383,254.64355,-93.0,158.51074,R50</property>
+         name="sdm:polyPoints">L55,275.3627,258.14355,-93.0,158.51074,R50</property>
    </NavigationCase>
    <Page
       id="Page25">
@@ -258,7 +258,7 @@
       <property
          name="description">Navigation Case</property>
       <property
-         name="sdm:polyPoints">L28,281.0,240.64355,118.0,108.29883,B50</property>
+         name="sdm:polyPoints">L23,281.0,237.14355,118.0,108.29883,B50</property>
    </NavigationCase>
    <Page
       id="Page27">
@@ -277,7 +277,7 @@
       <property
          name="description">Navigation Case</property>
       <property
-         name="sdm:polyPoints">L39,278.76724,247.64355,20.0,87.0,B50</property>
+         name="sdm:polyPoints">L34,278.8114,244.14355,20.0,87.0,B50</property>
    </NavigationCase>
    <Page
       id="Page29">
@@ -302,4 +302,23 @@
       <property
          name="sdm:polyPoints">R39,353.0,247.64355,525.35156,140.79883,L50</property>
    </NavigationCase>
+   <NavigationCase
+      islink="true"
+      id="NavigationCase32"
+      from="Page10"
+      to="Page31">
+      <property
+         name="fromOutcome">gototransferencias</property>
+      <property
+         name="description">Navigation Case</property>
+      <property
+         name="sdm:polyPoints">L45,276.83,251.14355,20.0,87.0,B50</property>
+   </NavigationCase>
+   <Page
+      id="Page31">
+      <property
+         name="wildcard">false</property>
+      <property
+         name="jspName">/transferencias.xhtml</property>
+   </Page>
 </SDM>

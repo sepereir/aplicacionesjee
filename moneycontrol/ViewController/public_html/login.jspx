@@ -21,7 +21,9 @@
                             <h2>Bienvenido a</h2>
                              
                             <h1>Money Control</h1>
-                             
+                            <p>
+                                <h:outputLabel value="" binding="#{mainBean.estado}" style="color:Red;"/>
+                            </p>
                             <h:form>
                                 <p>
                                     <label for="user">Usuario:</label>

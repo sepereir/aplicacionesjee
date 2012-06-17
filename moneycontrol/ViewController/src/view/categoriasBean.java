@@ -106,14 +106,14 @@ public class categoriasBean{
         
         if (usuario.setCuentas()) {
             Categoria[] categorias = usuario.getCategorias();
-            for (int i = 0; i < categorias.length; ++i) {
+            if(categorias != null) for (int i = 0; i < categorias.length; ++i) {
                 this.categoriasList.add(categorias[i]);
             }
         }
         this.categorias = usuario.getCategorias();
     }
     
-    public String borrarCategorias() {
+    public String borrarCategoria() {
         categoriasList.remove(categoriaSeleccionada);
         categoriaSeleccionada.borrarCategoria();
         return null;
