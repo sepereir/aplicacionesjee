@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import java.util.ArrayList;
 
+
 public class Usuario {
     
     //Variables de instancia
@@ -20,6 +21,8 @@ public class Usuario {
     private Cuenta[] cuentas;
     ArrayList<Categoria> categoriasList;
     ArrayList<Cuenta> cuentasList;
+    private boolean editable;
+
     
     //Constructores
     public Usuario() {
@@ -132,7 +135,7 @@ public class Usuario {
                 setNombre_completo(rs.getString("nombre_completo"));
                 setClave(rs.getString("contraseña"));
                 setCorreo(rs.getString("correo"));
-                setAdmin(rs.getString("admin") == "1");
+                setAdmin(rs.getString("admin").equals("1"));
                 flag = true;
             }
         } catch (SQLException e) {
@@ -140,7 +143,7 @@ public class Usuario {
         } finally {
             try{
                 rs.close();            
-                //st.close();
+                st.close();
             } catch(SQLException e){
                 e.printStackTrace();
             }
@@ -331,7 +334,7 @@ public class Usuario {
     }
     
     //Borrar objeto de la BD
-    public boolean borrarUsuario(String n){
+    public boolean borrarUsuario(){
         Connection con = Conexion.getSessionConn();
         if(con == null) return false;
         Statement st;
@@ -345,7 +348,7 @@ public class Usuario {
         }
         
         try {
-            st.executeUpdate("DELETE FROM USUARIO WHERE nombre = '" + n + "'");
+            st.executeUpdate("DELETE FROM USUARIO WHERE nombre = '" + getNombre() + "'");
             flag = true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -358,5 +361,64 @@ public class Usuario {
         }
         
         return flag;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
+    public boolean isEditable() {
+        return editable;
+    }
+    
+    static public ArrayList<Usuario> getAll(){
+        ArrayList<Usuario> lista = new ArrayList<Usuario>();
+        Connection con = Conexion.getSessionConn();
+        if(con == null) return lista;
+        Statement st;
+        ResultSet rs;        
+        
+        try {
+            st = con.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return lista;
+        }
+        
+        try {
+            rs = st.executeQuery("SELECT * FROM USUARIO ORDER BY admin DESC, nombre");
+        } catch (SQLException e) {
+            try {
+                st.close();
+            } catch (SQLException f) {
+                f.printStackTrace();
+            }
+            e.printStackTrace();
+            return lista;
+        }
+        
+        try {
+            while(rs.next()){
+                Usuario u = new Usuario(
+                    rs.getString("nombre"),
+                    rs.getString("nombre_completo"),
+                    rs.getString("contraseña"),
+                    rs.getString("correo"),
+                    rs.getString("admin").equals("1")
+                );
+                lista.add(u);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                rs.close();            
+                st.close();
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        
+        return lista;
     }
 }

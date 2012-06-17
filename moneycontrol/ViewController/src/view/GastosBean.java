@@ -1,21 +1,14 @@
 package view;
 
-import java.io.PrintStream;
-
 import java.sql.SQLException;
 
 import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.html.HtmlInputSecret;
-import javax.faces.component.html.HtmlInputText;
-import javax.faces.component.html.HtmlOutputLabel;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
+
 
 @ManagedBean(name = "GastosBean")
 @ViewScoped

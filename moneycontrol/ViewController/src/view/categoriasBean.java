@@ -1,16 +1,11 @@
 package view;
 
-import java.sql.Connection;
-
-import java.sql.SQLException;
-
 import java.util.ArrayList;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.component.html.HtmlOutputFormat;
 import javax.faces.context.FacesContext;
-import javax.swing.JPanel;
+
 
 @ManagedBean
 @RequestScoped
