@@ -107,6 +107,7 @@
                 </li>
                 </ul>
                 
+                <h1>Usuarios Registrados</h1>
                 <h:form>
                     <h:dataTable value="#{adminBean.usuariosList}" var="u"
     		styleClass="order-table"
@@ -149,7 +150,7 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                Acciones
+                                <h:outputText value="Acciones"/>
                             </f:facet>
                             <h:commandLink value="Editar" rendered="#{!u.editable}" action="#{adminBean.editarUsuario}">
                                 <f:setPropertyActionListener target="#{adminBean.usuarioSeleccionado}" value="#{u}" />

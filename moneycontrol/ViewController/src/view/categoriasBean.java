@@ -114,7 +114,7 @@ public class categoriasBean{
         return null;
     }
 
-    public String editarCategorias() {
+    public String editarCategoria() {
         categoriaSeleccionada.setEditable(true);
         return null;
     }

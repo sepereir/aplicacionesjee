@@ -29,11 +29,14 @@ public class transferBean{
         categoriasList = new ArrayList<Categoria>();
         nombreCuentasList = new ArrayList<String>();
         nombreCategoriasList = new ArrayList<String>();
-        for(Cuenta c: usuario.getCuentas()){
+        Cuenta[] auxCu = usuario.getCuentas();
+        Categoria[] auxCat = usuario.getCategorias();
+        
+        if (auxCu != null) for(Cuenta c: usuario.getCuentas()){
             cuentasList.add(c);
             nombreCuentasList.add(c.getNombre());
         }
-        for(Categoria c: usuario.getCategorias()){
+        if (auxCat != null) for(Categoria c: usuario.getCategorias()){
             categoriasList.add(c);
             nombreCategoriasList.add(c.getNombre());
         }

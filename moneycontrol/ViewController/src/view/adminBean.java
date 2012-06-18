@@ -107,17 +107,20 @@ public class adminBean {
     }
     
     public void actualizarLista(){
-        this.usuariosList = Usuario.getAll();
+        ArrayList<Usuario> aux = (ArrayList<Usuario>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("listaUsuarios");
+        this.usuariosList = aux == null ? Usuario.getAll() : aux;
     }
     
     public Object borrarUsuario(){
         usuariosList.remove(usuarioSeleccionado);
         usuarioSeleccionado.borrarUsuario();
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("listaUsuarios", usuariosList);
         return null;
     }
     
     public Object editarUsuario(){
         usuarioSeleccionado.setEditable(true);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("listaUsuarios", usuariosList);
         return null;
     }
     
@@ -129,6 +132,7 @@ public class adminBean {
                 u.setEditable(false);
             }
         }
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("listaUsuarios");
         return null;
     }
 }

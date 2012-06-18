@@ -4,7 +4,7 @@
          version="2.5">
   <context-param>
     <param-name>javax.faces.FACELETS_VIEW_MAPPINGS</param-name>
-    <param-value>*.jsf;*.xhtml</param-value>
+    <param-value>*.jsf;*.xhtml;*.jspx</param-value>
   </context-param>
   <context-param>
     <description>Version del sitio</description>

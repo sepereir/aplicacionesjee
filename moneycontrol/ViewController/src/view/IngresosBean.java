@@ -114,10 +114,8 @@ public class IngresosBean{
     
         ArrayList<Transaccion> t;
         totalGlobal = 0;
-        System.out.println("AL MENOS EXISTO");
         for(Categoria ca : categorias)
             for(Cuenta cu : cuentas){
-                System.out.println("!!!! ---> " + totalGlobal);
                 categoria = ca;
                 cuenta = cu;
                 t = getIngresos();
